@@ -1,0 +1,13 @@
+{
+    "service": {
+      "name": "elastic-internal",
+      "tags": [
+        "monitoring"
+      ],
+      "port": 9200,
+      "check": {
+        "http": "http://localhost:9200",
+        "interval": "30s"
+      }
+    }
+  }
