@@ -27,3 +27,15 @@ resource "consul_intention" "esm" {
   destination_name = "*"
   action           = "allow"
 }
+
+resource "consul_intention" "elastic-internal-collector" {
+  source_name      = "jaeger-collector"
+  destination_name = "elastic-internal"
+  action           = "allow"
+}
+
+resource "consul_intention" "elastic-internal-query" {
+  source_name      = "jaeger-query"
+  destination_name = "elastic-internal"
+  action           = "allow"
+}
