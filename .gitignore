@@ -90,3 +90,4 @@ keyfile
 # example: *tfplan*
 *.tfvars
 backend.tf
+.terraform
