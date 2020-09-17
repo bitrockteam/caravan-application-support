@@ -3,7 +3,7 @@ job "poc_ingress" {
   constraint {
     attribute = "${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "-pool-def-wrkr-grp$"
+    value     = "^defwrkr-"
   }
   group "ingress_group" {
     network {

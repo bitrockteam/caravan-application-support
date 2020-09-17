@@ -3,7 +3,7 @@ job "poc_terminating" {
   constraint {
     attribute = "${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "-pool-def-wrkr-grp$"
+    value     = "^defwrkr-"
   }
   group "terminating_group" {
     network {

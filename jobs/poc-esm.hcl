@@ -3,7 +3,7 @@ job "poc_esm" {
   constraint {
     attribute = "${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "-pool-def-wrkr-grp$"
+    value     = "^defwrkr-"
   }
   group "esm_group" {
     network {
