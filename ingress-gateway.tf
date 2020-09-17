@@ -56,17 +56,10 @@ resource "consul_config_entry" "ingress_gateway" {
           ]
         },
         {
-          Name = "microservizio"
-          Hosts = [
-            "microservizio",
-            "microservizio:8080",
-          ]
-        },
-        {
           Name = "jaeger-query"
           Hosts = [
-            "jaeger",
-            "jaeger:8080",
+            "jaeger-gcp",
+            "jaeger-gcp:8080",
           ]
         },
         {
