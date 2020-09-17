@@ -14,8 +14,8 @@ resource "consul_config_entry" "microservizio" {
     Protocol = "http"
   })
 }
-resource "consul_config_entry" "jaeger" {
-  name = "jaeger"
+resource "consul_config_entry" "jaeger-query" {
+  name = "jaeger-query"
   kind = "service-defaults"
 
   config_json = jsonencode({
@@ -24,6 +24,15 @@ resource "consul_config_entry" "jaeger" {
 }
 resource "consul_config_entry" "grafana-internal" {
   name = "grafana-internal"
+  kind = "service-defaults"
+
+  config_json = jsonencode({
+    Protocol = "http"
+  })
+}
+
+resource "consul_config_entry" "elastic-internal" {
+  name = "elastic-internal"
   kind = "service-defaults"
 
   config_json = jsonencode({
