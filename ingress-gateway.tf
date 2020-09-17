@@ -91,14 +91,3 @@ resource "consul_config_entry" "ingress_gateway" {
 resource "nomad_job" "poc-ingress" {
   jobspec = file("${path.module}/jobs/poc-ingress.hcl")
 }
-
-resource "consul_intention" "echo_service" {
-  source_name      = "poc-ingress"
-  destination_name = "spring-echo-example"
-  action           = "allow"
-}
-resource "consul_intention" "microservizio_service" {
-  source_name      = "poc-ingress"
-  destination_name = "microservizio"
-  action           = "allow"
-}
