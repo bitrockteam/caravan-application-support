@@ -3,7 +3,7 @@ job "hello_world" {
   constraint {
     attribute = "${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "-pool-def-wrkr-grp$"
+    value     = "^defwrkr-"
   }
   type        = "batch"
   group "test" {

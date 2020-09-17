@@ -4,7 +4,7 @@ job "opentracing_job" {
     constraint {
         attribute = "${attr.unique.hostname}"
         operator  = "regexp"
-        value     = "-pool-def-wrkr-grp$"
+        value     = "^defwrkr-"
     }
 
     group "app_group" {
@@ -94,7 +94,7 @@ job "opentracing_job" {
             }
 
             artifact {
-                source = "https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/UeiLjAem614XkVV12OhbbflBbO66nu81DQG7aFpZ56k/n/bancamediolanum3y/b/artifacts/o/OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
+                source = "gcs::https://www.googleapis.com/storage/v1/cfgs-bmed-1181724079/OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
                 destination = "local/"
             }
         }

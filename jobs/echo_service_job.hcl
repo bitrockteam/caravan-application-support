@@ -3,7 +3,7 @@ job "echo_job" {
     constraint {
       attribute = "${attr.unique.hostname}"
       operator  = "regexp"
-      value     = "-pool-def-wrkr-grp$"
+      value     = "^defwrkr-"
     }
     group "echo_group" {
         network {
@@ -89,7 +89,7 @@ job "echo_job" {
             }
 
             artifact {
-                source = "https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/pdBId85OdHX4LwkmU_rHTNqWSnPeuyAhNjJjR5C6Ruc/n/bancamediolanum3y/b/artifacts/o/spring-echo-example-1.0.0.jar",
+                source = "gcs::https://www.googleapis.com/storage/v1/cfgs-bmed-1181724079/spring-echo-example-1.0.0.jar",
                 destination = "local/"
             }
         }

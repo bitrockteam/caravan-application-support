@@ -54,7 +54,7 @@ job "logstash" {
       task "logstash" {
         artifact {
           destination = "local/"
-          source = "https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/r-VZCKvK_X1de-_MiUGkwKsSEjXYn-yjApXgxrP5C3E/n/bancamediolanum3y/b/artifacts/o/logstash-7.9.0.tar.gz"
+          source = "gcs::https://www.googleapis.com/storage/v1/cfgs-bmed-1181724079/logstash-7.9.0.tar.gz"
         }
         template {
           destination = "local/config/logstash.yml"
