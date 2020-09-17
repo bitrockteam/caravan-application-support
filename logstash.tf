@@ -2,12 +2,12 @@ resource "nomad_job" "logstash" {
   jobspec = file("${path.module}/jobs/logstash.hcl")
 }
 
-resource "consul_intention" "esm" {
+resource "consul_intention" "logstash-tcp" {
   source_name      = "*"
   destination_name = "logstash-tcp"
   action           = "allow"
 }
-resource "consul_intention" "esm" {
+resource "consul_intention" "logstash-http" {
   source_name      = "*"
   destination_name = "logstash-http"
   action           = "allow"
