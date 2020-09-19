@@ -51,29 +51,29 @@ resource "consul_config_entry" "ingress_gateway" {
         {
           Name = "spring-echo-example"
           Hosts = [
-            "spring-echo-example",
-            "spring-echo-example:8080",
+            "echo.hcpoc.bitrock.it",
+            "echo.hcpoc.bitrock.it:8080",
           ]
         },
         {
           Name = "jaeger-query"
           Hosts = [
-            "jaeger-gcp",
-            "jaeger-gcp:8080",
+            "jaeger.hcpoc.bitrock.it",
+            "jaeger.hcpoc.bitrock.it:8080",
           ]
         },
         {
           Name = "elastic-internal"
           Hosts = [
-            "elastic-internal",
-            "elastic-internal:8080",
+            "elastic-internal.hcpoc.bitrock.it",
+            "elastic-internal.hcpoc.bitrock.it:8080",
           ]
         },
         {
           Name = "grafana-internal"
           Hosts = [
-            "grafana-internal",
-            "grafana-internal:8080",
+            "grafana-internal.hcpoc.bitrock.it",
+            "grafana-internal.hcpoc.bitrock.it:8080",
           ]
         }
       ]
