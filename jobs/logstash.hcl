@@ -52,10 +52,6 @@ job "logstash" {
         }
       }
       task "logstash" {
-        artifact {
-          destination = "local/"
-          source = "gcs::https://www.googleapis.com/storage/v1/cfgs-bmed-1181724079/logstash-7.9.0.tar.gz"
-        }
         template {
           destination = "local/config/logstash.yml"
           data = <<-EOT
