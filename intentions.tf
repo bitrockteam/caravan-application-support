@@ -28,6 +28,12 @@ resource "consul_intention" "ingress_jaeger_query" {
   action           = "allow"
 }
 
+resource "consul_intention" "ingress_grafana" {
+  source_name      = "poc-ingress"
+  destination_name = "grafana-internal"
+  action           = "allow"
+}
+
 resource "consul_intention" "jaeger-query-jaeger-collector" {
   source_name      = "jaeger-query"
   destination_name = "jaeger-collector"
