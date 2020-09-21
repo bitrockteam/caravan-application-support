@@ -6,14 +6,6 @@ resource "consul_config_entry" "spring-echo-example" {
     Protocol = "http"
   })
 }
-resource "consul_config_entry" "microservizio" {
-  name = "microservizio"
-  kind = "service-defaults"
-
-  config_json = jsonencode({
-    Protocol = "http"
-  })
-}
 resource "consul_config_entry" "jaeger-query" {
   name = "jaeger-query"
   kind = "service-defaults"
