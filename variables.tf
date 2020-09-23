@@ -14,3 +14,6 @@ variable "vault_skip_tls_verify" {
   type    = bool
   default = false
 }
+variable "ca_cert_file" {}
+variable "cert_file" {}
+variable "key_file" {}
