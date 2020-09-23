@@ -76,7 +76,7 @@ job "logstash" {
           EOT
         }
         config {
-          command = "local/logstash-7.9.0/bin/logstash"
+          command = "/usr/share/logstash/bin/logstash"
           args = [
             "--path.data", "alloc/data",
             "--path.config", "local/config",
