@@ -20,10 +20,6 @@ job "echo_job" {
             sidecar_service {
               proxy {
                 upstreams {
-                  destination_name = "devops-proxy-http"
-                  local_bind_port  = 8080
-                }
-                upstreams {
                   destination_name = "logstash-tcp"
                   local_bind_port  = 4560
                 }
@@ -53,7 +49,7 @@ job "echo_job" {
           }
           check {
             type     = "http"
-            protocol     = "http"
+            protocol = "http"
             port     = "http"
             interval = "25s"
             timeout  = "35s"
