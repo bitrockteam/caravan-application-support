@@ -22,6 +22,14 @@ resource "consul_config_entry" "grafana-internal" {
     Protocol = "http"
   })
 }
+resource "consul_config_entry" "kibana" {
+  name = "kibana"
+  kind = "service-defaults"
+
+  config_json = jsonencode({
+    Protocol = "http"
+  })
+}
 
 resource "consul_config_entry" "elastic-internal" {
   name = "elastic-internal"
@@ -31,6 +39,16 @@ resource "consul_config_entry" "elastic-internal" {
     Protocol = "http"
   })
 }
+
+resource "consul_config_entry" "logstash-tcp-service-defaults" {
+  name = "logstash-tcp"
+  kind = "service-defaults"
+
+  config_json = jsonencode({
+    Protocol = "tcp"
+  })
+}
+
 resource "consul_config_entry" "ingress_gateway" {
   name = "poc-ingress"
   kind = "ingress-gateway"
@@ -41,38 +59,34 @@ resource "consul_config_entry" "ingress_gateway" {
       Protocol = "http"
       Services = [
         {
-          Name = "spring-echo-example"
-          Hosts = [
-            "echo.hcpoc.bitrock.it",
-            "echo.hcpoc.bitrock.it:8080",
-          ]
-        },
-        {
           Name = "jaeger-query"
           Hosts = [
-            "jaeger.hcpoc.bitrock.it",
-            "jaeger.hcpoc.bitrock.it:8080",
+            "jaeger.${var.external_domain}",
+            "jaeger.${var.external_domain}:8080",
           ]
         },
         {
           Name = "elastic-internal"
           Hosts = [
-            "elastic-internal.hcpoc.bitrock.it",
-            "elastic-internal.hcpoc.bitrock.it:8080",
+            "elastic-internal.${var.external_domain}",
+            "elastic-internal.${var.external_domain}:8080",
           ]
         },
         {
           Name = "grafana-internal"
           Hosts = [
-            "grafana-internal.hcpoc.bitrock.it",
-            "grafana-internal.hcpoc.bitrock.it:8080",
+            "grafana-internal.${var.external_domain}",
+            "grafana-internal.${var.external_domain}:8080",
+          ]
+        },
+        {
+          Name = "kibana"
+          Hosts = [
+            "kibana.${var.external_domain}",
+            "kibana.${var.external_domain}:8080",
           ]
         }
       ]
     }]
   })
-}
-
-resource "nomad_job" "poc-ingress" {
-  jobspec = file("${path.module}/jobs/poc-ingress.hcl")
 }
