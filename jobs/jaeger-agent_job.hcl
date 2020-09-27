@@ -1,11 +1,11 @@
 job "jaeger-agent" {
     datacenters = ["hcpoc"]
 
-    type = "service"
+    type = "system"
 
     constraint {
         attribute = "${attr.unique.hostname}"
-        operator  = "="
+        operator  = "!="
         value     = "monitoring"
     }
 
@@ -15,6 +15,9 @@ job "jaeger-agent" {
             mode = "host"
             port "http" {
                 static = 14271
+            }
+            port "compact" {
+                static = 6831
             }
         }
         service {
@@ -36,8 +39,8 @@ job "jaeger-agent" {
             config {
                 command = "/usr/local/bin/jaeger-agent"
                 args = [
-                    "--reporter.grpc.host-port=127.0.0.1:14250",
-                    "--processor.jaeger-compact.server-host-port=0.0.0.0:6831",
+                    "--reporter.grpc.host-port=jaeger-collector.service.hcpoc.consul:14250",
+                    "--processor.jaeger-compact.server-host-port=0.0.0.0:${NOMAD_PORT_compact}",
                     "--reporter.grpc.discovery.min-peers=1"
                 ]
             }
