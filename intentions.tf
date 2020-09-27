@@ -1,14 +1,3 @@
-resource "consul_intention" "consul_to_all" {
-  source_name      = "consul"
-  destination_name = "*"
-  action           = "allow"
-}
-resource "consul_intention" "all_to_consul" {
-  source_name      = "*"
-  destination_name = "consul"
-  action           = "allow"
-}
-
 resource "consul_intention" "esm" {
   source_name      = "poc-esm"
   destination_name = "*"
@@ -51,9 +40,9 @@ resource "consul_intention" "ingress_grafana" {
   action           = "allow"
 }
 
-resource "consul_intention" "ingress_elastic" {
+resource "consul_intention" "ingress_prometheus" {
   source_name      = "poc-ingress"
-  destination_name = "elastic-internal"
+  destination_name = "prometheus"
   action           = "allow"
 }
 
