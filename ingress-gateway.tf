@@ -1,5 +1,5 @@
 resource "consul_config_entry" "ingress_gateway" {
-  name = "poc-ingress"
+  name = "ingress-config"
   kind = "ingress-gateway"
 
   config_json = jsonencode({

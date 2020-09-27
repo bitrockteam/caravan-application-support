@@ -21,7 +21,8 @@ job "jaeger-query" {
         service {
             name = "jaeger-query"
             tags = [ "monitoring" ]
-            port = "http",
+            port = "http"
+            
             check {
                 type = "http"
                 port = "http_admin"

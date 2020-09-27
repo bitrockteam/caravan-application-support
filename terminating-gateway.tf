@@ -1,5 +1,5 @@
 resource "consul_config_entry" "terminating_gateway" {
-  name = "poc-terminating"
+  name = "terminating-config"
   kind = "terminating-gateway"
 
   config_json = jsonencode({
