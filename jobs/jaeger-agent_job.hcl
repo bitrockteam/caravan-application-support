@@ -23,7 +23,7 @@ job "jaeger-agent" {
         service {
             name = "jaeger-agent"
             tags = [ "monitoring" ]
-            port = "http",
+            port = "http"
             check {
                 type = "http"
                 port = "http"
