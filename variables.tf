@@ -17,3 +17,7 @@ variable "vault_skip_tls_verify" {
 variable "ca_cert_file" {}
 variable "cert_file" {}
 variable "key_file" {}
+variable "external_domain" {
+  type = string
+  default = ""
+}
