@@ -11,13 +11,13 @@ resource "consul_config_entry" "terminating_gateway" {
         Name = "logstash-http"
       },
       {
-        Name = "elastic-internal"
-      },
-      {
         Name = "grafana-internal"
       },
       {
-        Name = "jaeger-query"
+        Name = "elastic-internal"
+      },
+      {
+        Name = "prometheus"
       }
     ]
   })
