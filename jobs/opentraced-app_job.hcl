@@ -19,14 +19,7 @@ job "opentraced-app" {
           port = "http"
 
           connect {
-            sidecar_service {
-              proxy {
-                upstreams {
-                  destination_name = "kibana"
-                  local_bind_port = 8080
-                }
-              }
-            }
+            sidecar_service {}
             sidecar_task {
                 name  = "connect-opentraced-app"
                 driver = "exec"
