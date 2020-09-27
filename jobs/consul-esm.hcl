@@ -1,11 +1,11 @@
-job "poc_esm" {
+job "consul-esm" {
   datacenters = ["hcpoc"]
   constraint {
     attribute = "${attr.unique.hostname}"
     operator  = "regexp"
     value     = "^defwrkr-"
   }
-  group "esm_group" {
+  group "esm-group" {
     network {
       mode = "host"
     }

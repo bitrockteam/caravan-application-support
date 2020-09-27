@@ -1,19 +1,19 @@
-job "poc_ingress" {
+job "consul-terminating" {
   datacenters = ["hcpoc"]
   constraint {
     attribute = "${attr.unique.hostname}"
     operator  = "regexp"
     value     = "^defwrkr-"
   }
-  group "ingress_group" {
+  group "terminating-group" {
     network {
-      port "http" {
-        static = 8181
-        to     = 8181
-      }
       mode = "host"
+      port "envoy_admin" {}
+      port "http" {
+        static = 21101
+      }
     }
-    task "ingress" {
+    task "terminating" {
       driver = "exec"
       user   = "consul"
       env {
@@ -29,10 +29,11 @@ job "poc_ingress" {
         args = [
           "connect", "envoy",
           "-envoy-binary", "/usr/bin/envoy",
-          "-gateway=ingress",
+          "-gateway=terminating",
           "-register",
-          "-service", "poc-ingress",
-          "-address", "${NOMAD_IP_http}:8181",
+          "-service", "poc-terminating",
+          "-admin-bind", "127.0.0.1:${NOMAD_PORT_envoy_admin}",
+          "-address", "${NOMAD_ADDR_http}",
           "-http-addr", "http://127.0.0.1:8501",
           "-ca-file", "/etc/consul.d/ca",
           "-client-cert", "/etc/consul.d/cert",

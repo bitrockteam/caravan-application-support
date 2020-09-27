@@ -22,7 +22,3 @@ resource "consul_config_entry" "terminating_gateway" {
     ]
   })
 }
-
-resource "nomad_job" "poc-terminating" {
-  jobspec = file("${path.module}/jobs/poc-terminating.hcl")
-}
