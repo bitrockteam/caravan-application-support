@@ -11,6 +11,9 @@ resource "consul_config_entry" "terminating_gateway" {
         Name = "logstash-http"
       },
       {
+        Name = "jaeger-query"
+      },
+      {
         Name = "grafana-internal"
       },
       {
