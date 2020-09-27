@@ -31,7 +31,7 @@ job "consul-terminating" {
           "-envoy-binary", "/usr/bin/envoy",
           "-gateway=terminating",
           "-register",
-          "-service", "poc-terminating",
+          "-service", "terminating-gateway",
           "-admin-bind", "127.0.0.1:${NOMAD_PORT_envoy_admin}",
           "-address", "${NOMAD_ADDR_http}",
           "-http-addr", "http://127.0.0.1:8501",

@@ -1,5 +1,5 @@
 resource "consul_config_entry" "ingress_gateway" {
-  name = "ingress-config"
+  name = "ingress-gateway"
   kind = "ingress-gateway"
 
   config_json = jsonencode({
@@ -33,6 +33,13 @@ resource "consul_config_entry" "ingress_gateway" {
           Hosts = [
             "prometheus.${var.external_domain}",
             "prometheus.${var.external_domain}:8080",
+          ]
+        },
+        {
+          Name = "echo-server"
+          Hosts = [
+            "echo.${var.external_domain}",
+            "echo.${var.external_domain}:8080",
           ]
         }
       ]

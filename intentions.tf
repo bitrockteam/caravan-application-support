@@ -1,5 +1,5 @@
 resource "consul_intention" "esm" {
-  source_name      = "poc-esm"
+  source_name      = "consul-esm"
   destination_name = "*"
   action           = "allow"
 }
@@ -23,26 +23,32 @@ resource "consul_intention" "jaeger-agent" {
 }
 
 resource "consul_intention" "ingress_jaeger-query" {
-  source_name      = "poc-ingress"
+  source_name      = "ingress-gateway"
   destination_name = "jaeger-query"
   action           = "allow"
 }
 
 resource "consul_intention" "ingress_kibana" {
-  source_name      = "poc-ingress"
+  source_name      = "ingress-gateway"
   destination_name = "kibana"
   action           = "allow"
 }
 
 resource "consul_intention" "ingress_grafana" {
-  source_name      = "poc-ingress"
+  source_name      = "ingress-gateway"
   destination_name = "grafana-internal"
   action           = "allow"
 }
 
 resource "consul_intention" "ingress_prometheus" {
-  source_name      = "poc-ingress"
+  source_name      = "ingress-gateway"
   destination_name = "prometheus"
+  action           = "allow"
+}
+
+resource "consul_intention" "ingress_echo-server" {
+  source_name      = "ingress-gateway"
+  destination_name = "echo-server"
   action           = "allow"
 }
 
@@ -70,8 +76,8 @@ resource "consul_intention" "kibana_elastic-internal" {
   action           = "allow"
 }
 
-resource "consul_intention" "opentraced-app_kibana" {
-  source_name      = "opentraced-app"
+resource "consul_intention" "echo-server_kibana" {
+  source_name      = "echo-server"
   destination_name = "kibana"
   action           = "allow"
 }

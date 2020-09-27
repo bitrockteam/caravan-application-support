@@ -31,7 +31,7 @@ job "consul-ingress" {
           "-envoy-binary", "/usr/bin/envoy",
           "-gateway=ingress",
           "-register",
-          "-service", "poc-ingress",
+          "-service", "ingress-gateway",
           "-address", "${NOMAD_IP_http}:8181",
           "-http-addr", "http://127.0.0.1:8501",
           "-ca-file", "/etc/consul.d/ca",
