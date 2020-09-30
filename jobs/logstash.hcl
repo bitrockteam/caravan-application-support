@@ -1,7 +1,14 @@
 job "logstash" {
-  datacenters = [
-    "hcpoc"
-  ]
+  datacenters = [ "hcpoc" ]
+
+  type = "system"
+
+  constraint {
+      attribute = "${attr.unique.hostname}"
+      operator  = "!="
+      value     = "monitoring"
+  }
+
   group "service_group" {
       ephemeral_disk {
         migrate = true
@@ -33,7 +40,7 @@ job "logstash" {
 
         check {
           type     = "http"
-          protocol     = "http"
+          protocol = "http"
           port     = "api"
           interval = "25s"
           timeout  = "35s"
@@ -69,12 +76,18 @@ job "logstash" {
             }
             output {
               elasticsearch {
-                index => "poclogs-%{+MMdd}"
+                index => "hcpoc-logs-%{+MMdd}"
                 hosts => "http://elastic-internal.service.hcpoc.consul:9200"
               }
             }
           EOT
         }
+
+        template {
+          data = "nameserver {{env `NOMAD_HOST_IP_http`}}"
+          destination = "etc/resolv.conf"
+        }
+
         config {
           command = "/usr/share/logstash/bin/logstash"
           args = [
