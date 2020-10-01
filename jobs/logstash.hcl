@@ -2,6 +2,7 @@ job "logstash" {
   datacenters = [
     %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
   ]
+
   group "service_group" {
       ephemeral_disk {
         migrate = true
@@ -33,7 +34,7 @@ job "logstash" {
 
         check {
           type     = "http"
-          protocol     = "http"
+          protocol = "http"
           port     = "api"
           interval = "25s"
           timeout  = "35s"
@@ -75,6 +76,12 @@ job "logstash" {
             }
           EOT
         }
+
+        template {
+          data = "nameserver {{env `NOMAD_HOST_IP_http`}}"
+          destination = "etc/resolv.conf"
+        }
+
         config {
           command = "/usr/share/logstash/bin/logstash"
           args = [
