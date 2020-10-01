@@ -75,7 +75,7 @@ job "opentraced-app" {
                     service-name: springboot-app
                     enabled: TRUE
                     udp-sender:
-                      host: jaeger-agent.service.hcpoc.consul
+                      host: jaeger-agent.${services_domain}
                       port: 6831
               EOT
               destination = "local/application.yml"

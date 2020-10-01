@@ -55,7 +55,7 @@ job "jaeger-collector" {
 
             env {
                 SPAN_STORAGE_TYPE = "elasticsearch"
-                ES_SERVER_URLS = "http://elastic-internal.service.hcpoc.consul:9200"
+                ES_SERVER_URLS = "http://elastic-internal.${services_domain}:9200"
             }
         }
     }

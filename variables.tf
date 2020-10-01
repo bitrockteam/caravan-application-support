@@ -4,6 +4,13 @@ variable "dc_names" {
 variable "external_domain" {
   type = string
 }
+variable "services_domain" {
+  type = string
+}
+variable "logstash_index_prefix" {
+  type    = string
+  default = "logs-"
+}
 variable "nomad_endpoint" {
   type        = string
   description = "(required) nomad cluster endpoint"
