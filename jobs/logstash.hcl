@@ -70,7 +70,7 @@ job "logstash" {
             }
             output {
               elasticsearch {
-                index => "poclogs-%%{+MMdd}"
+                index => "${logstash_index_prefix}%%{+MMdd}"
                 hosts => "http://elastic-internal.${services_domain}:9200"
               }
             }
