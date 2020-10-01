@@ -1,7 +1,9 @@
 job "consul-ingress" {
-  datacenters = ["hcpoc"]
+  datacenters = [
+    %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+  ]
   constraint {
-    attribute = "${attr.unique.hostname}"
+    attribute = "$${attr.unique.hostname}"
     operator  = "regexp"
     value     = "^defwrkr-"
   }
@@ -32,7 +34,7 @@ job "consul-ingress" {
           "-gateway=ingress",
           "-register",
           "-service", "ingress-gateway",
-          "-address", "${NOMAD_IP_http}:8181",
+          "-address", "$${NOMAD_IP_http}:8181",
           "-http-addr", "http://127.0.0.1:8501",
           "-ca-file", "/etc/consul.d/ca",
           "-client-cert", "/etc/consul.d/cert",

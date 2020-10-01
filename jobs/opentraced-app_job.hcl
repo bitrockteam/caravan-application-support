@@ -1,8 +1,10 @@
 job "opentraced-app" {
-    datacenters = ["hcpoc"]
+    datacenters = [
+        %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+    ]
 
     constraint {
-        attribute = "${attr.unique.hostname}"
+        attribute = "$${attr.unique.hostname}"
         operator  = "regexp"
         value     = "^defwrkr-"
     }
@@ -27,9 +29,9 @@ job "opentraced-app" {
                     command = "/usr/bin/envoy"
                     args  = [
                         "-c",
-                        "${NOMAD_SECRETS_DIR}/envoy_bootstrap.json",
+                        "$${NOMAD_SECRETS_DIR}/envoy_bootstrap.json",
                         "-l",
-                        "${meta.connect.log_level}"
+                        "$${meta.connect.log_level}"
                     ]
                 }
             }
@@ -79,8 +81,8 @@ job "opentraced-app" {
               destination = "local/application.yml"
             }
             env {
-              SERVER_PORT="${NOMAD_PORT_http}"
-              MANAGEMENT_SERVER_PORT="${NOMAD_PORT_http_mgmt}"
+              SERVER_PORT="$${NOMAD_PORT_http}"
+              MANAGEMENT_SERVER_PORT="$${NOMAD_PORT_http_mgmt}"
             }
             config {
                 command = "/bin/java"

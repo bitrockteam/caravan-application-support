@@ -1,13 +1,7 @@
 job "logstash" {
-  datacenters = [ "hcpoc" ]
-
-  type = "system"
-
-  constraint {
-      attribute = "${attr.unique.hostname}"
-      operator  = "!="
-      value     = "monitoring"
-  }
+  datacenters = [
+    %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+  ]
 
   group "service_group" {
       ephemeral_disk {
@@ -76,7 +70,7 @@ job "logstash" {
             }
             output {
               elasticsearch {
-                index => "hcpoc-logs-%{+MMdd}"
+                index => "poclogs-%%{+MMdd}"
                 hosts => "http://elastic-internal.service.hcpoc.consul:9200"
               }
             }
@@ -94,7 +88,7 @@ job "logstash" {
             "--path.data", "alloc/data",
             "--path.config", "local/config",
             "--path.logs", "alloc/data/logs",
-            "--http.port", "${NOMAD_PORT_api}",
+            "--http.port", "$${NOMAD_PORT_api}",
             "--http.host", "0.0.0.0"
           ]
         }
