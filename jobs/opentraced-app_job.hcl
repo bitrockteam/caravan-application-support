@@ -95,7 +95,7 @@ job "opentraced-app" {
             }
 
             artifact {
-                source = "gcs::https://www.googleapis.com/storage/v1/cfgs-hashicorp-3756369803/OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
+                source = "${artifacts_source_prefix}OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
                 destination = "local/"
             }
         }

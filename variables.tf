@@ -7,6 +7,9 @@ variable "external_domain" {
 variable "services_domain" {
   type = string
 }
+variable "artifacts_source_prefix" {
+  type = string
+}
 variable "logstash_index_prefix" {
   type    = string
   default = "logs-"

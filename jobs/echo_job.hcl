@@ -52,7 +52,7 @@ job "echo-server" {
             }
 
             artifact {
-                source = "gcs::https://www.googleapis.com/storage/v1/cfgs-hashicorp-3756369803/echo-server",
+                source = "${artifacts_source_prefix}echo-server",
                 destination = "local/"
             }
 

@@ -7,8 +7,9 @@ resource "nomad_job" "app" {
   jobspec = templatefile(
     each.value,
     {
-      dc_names        = var.dc_names
-      services_domain = var.services_domain
+      dc_names                = var.dc_names
+      services_domain         = var.services_domain
+      artifacts_source_prefix = var.artifacts_source_prefix
     }
   )
 }
