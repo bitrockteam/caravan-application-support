@@ -34,3 +34,8 @@ variable "ca_cert_file" {
   default = null
 }
 
+variable "cloud" {
+  type        = string
+  default     = ""
+  description = "Allow to deploy cloud specific jobs"
+}
