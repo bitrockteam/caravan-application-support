@@ -9,7 +9,7 @@ job "csi_nodes" {
       template {
         data = <<EOH
 {{ with secret "secret/gcp/pd_csi_sa_credential" }}
-{{- .Data.credential_json -}}
+{{- .Data.data.credential_json -}}
 {{ end }}
 EOH
   destination = "secrets/credential.json"
@@ -17,13 +17,14 @@ EOH
       env { "GOOGLE_APPLICATION_CREDENTIALS" = "/secrets/credential.json"
       }
       config {
-        image = "gcr.io/gke-release/gcp-compute-persistent-disk-csi-driver:v0.7.0-gke.0"
+        image = "gcr.io/gke-release/gcp-compute-persistent-disk-csi-driver:v1.0.1-gke.0"
         args = [
           "--endpoint=unix:///csi/csi.sock",
           "--v=6",
           "--logtostderr",
           "--run-controller-service=false"
-        ]
+        ],
+        dns_servers = ["${attr.unique.network.ip-address}"]
         privileged = true
       }
       csi_plugin {

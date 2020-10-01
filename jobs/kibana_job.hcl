@@ -46,6 +46,7 @@ job "kibana" {
 
             config {
                 image = "docker.elastic.co/kibana/kibana:7.9.1"
+                dns_servers = ["${attr.unique.network.ip-address}"]
             }
 
             env {
