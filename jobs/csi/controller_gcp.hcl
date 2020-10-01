@@ -1,4 +1,4 @@
-job "controller" {
+job "csi_controller" {
     datacenters = [
         %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
     ]

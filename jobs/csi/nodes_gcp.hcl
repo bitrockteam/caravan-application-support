@@ -1,4 +1,4 @@
-job "nodes" {
+job "csi_nodes" {
     datacenters = [
         %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
     ]
