@@ -1,7 +1,9 @@
 job "hello_world" {
-  datacenters = ["hcpoc"]
+  datacenters = [
+    %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+  ]
   constraint {
-    attribute = "${attr.unique.hostname}"
+    attribute = "$${attr.unique.hostname}"
     operator  = "regexp"
     value     = "^defwrkr-"
   }
@@ -11,7 +13,7 @@ job "hello_world" {
       driver = "raw_exec"
       config {
         command = "/bin/echo"
-        args    = ["Hello world from ${node.unique.name}!"]
+        args    = ["Hello world from $${node.unique.name}!"]
       }
     }
   }

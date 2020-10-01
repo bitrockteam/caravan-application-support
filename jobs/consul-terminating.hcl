@@ -1,7 +1,9 @@
 job "consul-terminating" {
-  datacenters = ["hcpoc"]
+  datacenters = [
+    %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+  ]
   constraint {
-    attribute = "${attr.unique.hostname}"
+    attribute = "$${attr.unique.hostname}"
     operator  = "regexp"
     value     = "^defwrkr-"
   }
@@ -32,8 +34,8 @@ job "consul-terminating" {
           "-gateway=terminating",
           "-register",
           "-service", "terminating-gateway",
-          "-admin-bind", "127.0.0.1:${NOMAD_PORT_envoy_admin}",
-          "-address", "${NOMAD_ADDR_http}",
+          "-admin-bind", "127.0.0.1:$${NOMAD_PORT_envoy_admin}",
+          "-address", "$${NOMAD_ADDR_http}",
           "-http-addr", "http://127.0.0.1:8501",
           "-ca-file", "/etc/consul.d/ca",
           "-client-cert", "/etc/consul.d/cert",

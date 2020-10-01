@@ -1,10 +1,12 @@
 job "jaeger-query" {
-    datacenters = ["hcpoc"]
+    datacenters = [
+        %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+    ]
 
     type = "service"
 
     constraint {
-        attribute = "${attr.unique.hostname}"
+        attribute = "$${attr.unique.hostname}"
         operator  = "="
         value     = "monitoring"
     }
@@ -44,8 +46,8 @@ job "jaeger-query" {
             config {
                 command = "/usr/local/bin/jaeger-query"
                 args = [
-                    "--admin.http.host-port=0.0.0.0:${NOMAD_PORT_http_admin}",
-                    "--query.host-port=0.0.0.0:${NOMAD_PORT_http}"
+                    "--admin.http.host-port=0.0.0.0:$${NOMAD_PORT_http_admin}",
+                    "--query.host-port=0.0.0.0:$${NOMAD_PORT_http}"
                 ]
             }
 

@@ -4,21 +4,46 @@ locals {
 
 resource "nomad_job" "app" {
   for_each = local.jobs
-  jobspec  = file(each.value)
+  jobspec = templatefile(
+    each.value,
+    {
+      dc_names = var.dc_names
+    }
+  )
 }
 
 resource "nomad_job" "logstash" {
-  jobspec = file("${path.module}/jobs/logstash.hcl")
+  jobspec = templatefile(
+    "${path.module}/jobs/logstash.hcl",
+    {
+      dc_names = var.dc_names
+    }
+  )
 }
 
 resource "nomad_job" "consul-ingress" {
-  jobspec = file("${path.module}/jobs/consul-ingress.hcl")
+  jobspec = templatefile(
+    "${path.module}/jobs/consul-ingress.hcl",
+    {
+      dc_names = var.dc_names
+    }
+  )
 }
 
 resource "nomad_job" "consul-terminating" {
-  jobspec = file("${path.module}/jobs/consul-terminating.hcl")
+  jobspec = templatefile(
+    "${path.module}/jobs/consul-terminating.hcl",
+    {
+      dc_names = var.dc_names
+    }
+  )
 }
 
 resource "nomad_job" "consul-esm" {
-  jobspec = file("${path.module}/jobs/consul-esm.hcl")
+  jobspec = templatefile(
+    "${path.module}/jobs/consul-esm.hcl",
+    {
+      dc_names = var.dc_names
+    }
+  )
 }

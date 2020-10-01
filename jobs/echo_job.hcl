@@ -1,8 +1,10 @@
 job "echo-server" {
-    datacenters = ["hcpoc"]
+  datacenters = [
+    %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+  ]
 
     constraint {
-        attribute = "${attr.unique.hostname}"
+        attribute = "$${attr.unique.hostname}"
         operator  = "regexp"
         value     = "^defwrkr-"
     }
@@ -55,7 +57,7 @@ job "echo-server" {
             }
 
             env {
-              PORT="${NOMAD_PORT_http}"
+              PORT="$${NOMAD_PORT_http}"
             }
 
             config {

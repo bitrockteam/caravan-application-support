@@ -1,10 +1,12 @@
 job "kibana" {
-    datacenters = ["hcpoc"]
+    datacenters = [
+        %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
+    ]
 
     type = "service"
 
     constraint {
-        attribute = "${attr.unique.hostname}"
+        attribute = "$${attr.unique.hostname}"
         operator  = "="
         value     = "monitoring"
     }
@@ -48,7 +50,7 @@ job "kibana" {
 
             env {
                 SERVER_NAME = "kibana.hashicorp.cloud.bitrock.it"
-                SERVER_PORT = "${NOMAD_PORT_http}"
+                SERVER_PORT = "$${NOMAD_PORT_http}"
                 ELASTICSEARCH_HOSTS = "http://elastic-internal.service.hcpoc.consul:9200"
                 TELEMETRY_ENABLED = "false"
                 MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED = "false"
