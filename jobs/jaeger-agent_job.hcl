@@ -41,7 +41,7 @@ job "jaeger-agent" {
             config {
                 command = "/usr/local/bin/jaeger-agent"
                 args = [
-                    "--reporter.grpc.host-port=jaeger-collector.service.hcpoc.consul:14250",
+                    "--reporter.grpc.host-port=jaeger-collector.${services_domain}:14250",
                     "--processor.jaeger-compact.server-host-port=0.0.0.0:$${NOMAD_PORT_compact}",
                     "--reporter.grpc.discovery.min-peers=1"
                 ]

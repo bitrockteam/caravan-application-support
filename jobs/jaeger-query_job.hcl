@@ -53,7 +53,7 @@ job "jaeger-query" {
 
             env {
                 SPAN_STORAGE_TYPE = "elasticsearch"
-                ES_SERVER_URLS = "http://elastic-internal.service.hcpoc.consul:9200"
+                ES_SERVER_URLS = "http://elastic-internal.${services_domain}:9200"
                 JAEGER_AGENT_HOST = "jaeger-agent.service.hcpoc.consul"
                 JAEGER_AGENT_PORT = "6831"
             }

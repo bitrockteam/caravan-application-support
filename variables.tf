@@ -4,6 +4,9 @@ variable "dc_names" {
 variable "external_domain" {
   type = string
 }
+variable "services_domain" {
+  type = string
+}
 variable "nomad_endpoint" {
   type        = string
   description = "(required) nomad cluster endpoint"

@@ -71,7 +71,7 @@ job "logstash" {
             output {
               elasticsearch {
                 index => "poclogs-%%{+MMdd}"
-                hosts => "http://elastic-internal.service.hcpoc.consul:9200"
+                hosts => "http://elastic-internal.${services_domain}:9200"
               }
             }
           EOT

@@ -51,7 +51,7 @@ job "kibana" {
             env {
                 SERVER_NAME = "kibana.hashicorp.cloud.bitrock.it"
                 SERVER_PORT = "$${NOMAD_PORT_http}"
-                ELASTICSEARCH_HOSTS = "http://elastic-internal.service.hcpoc.consul:9200"
+                ELASTICSEARCH_HOSTS = "http://elastic-internal.service.${services_domain}:9200"
                 TELEMETRY_ENABLED = "false"
                 MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED = "false"
                 STATUS.ALLOWANONYMOUS = "true"
