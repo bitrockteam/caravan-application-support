@@ -7,6 +7,9 @@ variable "external_domain" {
 variable "services_domain" {
   type = string
 }
+variable "artifacts_source_prefix" {
+  type = string
+}
 variable "logstash_index_prefix" {
   type    = string
   default = "logs-"
@@ -31,3 +34,8 @@ variable "ca_cert_file" {
   default = null
 }
 
+variable "cloud" {
+  type        = string
+  default     = ""
+  description = "Allow to deploy cloud specific jobs"
+}
