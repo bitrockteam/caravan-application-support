@@ -25,7 +25,7 @@ EOH
           "--logtostderr",
           "--run-node-service=false"
         ],
-        dns_servers = ["${attr.unique.network.ip-address}"]
+        dns_servers = ["$${attr.unique.network.ip-address}"]
       }
       csi_plugin {
         id        = "gcepd"

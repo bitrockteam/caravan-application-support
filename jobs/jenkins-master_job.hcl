@@ -1,9 +1,9 @@
-job "jenkins-server" {
+job "jenkins" {
     datacenters = [
         %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
     ]
 
- type        = "service"
+  type        = "service"
   priority    = 50
 
   update {
@@ -31,7 +31,7 @@ job "jenkins-server" {
     task "jenkins-master" {
       driver = "docker"
 
-        volume_mount {
+      volume_mount {
         volume      = "jenkins-master"
         destination = "/var/jenkins_home"
         read_only   = false
@@ -44,6 +44,8 @@ job "jenkins-server" {
           http = 8080
           jnlp = 50000
         }
+
+        dns_servers = ["$${attr.unique.network.ip-address}"]        
       }
 
       service {

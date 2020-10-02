@@ -24,7 +24,7 @@ EOH
           "--logtostderr",
           "--run-controller-service=false"
         ],
-        dns_servers = ["${attr.unique.network.ip-address}"]
+        dns_servers = ["$${attr.unique.network.ip-address}"]
         privileged = true
       }
       csi_plugin {
