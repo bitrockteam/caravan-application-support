@@ -8,13 +8,13 @@ job "csi_nodes" {
       driver = "docker"
       template {
         data = <<EOH
-{{ with secret "secret/gcp/pd_csi_sa_credential" }}
-{{- .Data.data.credential_json -}}
+{{ with secret "secret/gcp/pd_csi_sa_credentials" }}
+{{- .Data.data.credentials_json -}}
 {{ end }}
 EOH
-  destination = "secrets/credential.json"
+  destination = "secrets/credentials.json"
       }
-      env { "GOOGLE_APPLICATION_CREDENTIALS" = "/secrets/credential.json"
+      env { "GOOGLE_APPLICATION_CREDENTIALS" = "/secrets/credentials.json"
       }
       config {
         image = "gcr.io/gke-release/gcp-compute-persistent-disk-csi-driver:v1.0.1-gke.0"
