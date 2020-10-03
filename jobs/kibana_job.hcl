@@ -18,9 +18,6 @@ job "kibana" {
                 static = 5601
                 to = 5601
             }
-            dns {
-                servers = ["10.128.0.5", "8.8.8.8"]
-            }
         }
         service {
             name = "kibana"

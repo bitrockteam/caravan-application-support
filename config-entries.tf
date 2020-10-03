@@ -4,7 +4,7 @@ resource "consul_config_entry" "proxy_defaults" {
 
   config_json = jsonencode({
     Config = {
-      protocol = "http2",
+      protocol = "http",
       envoy_prometheus_bind_addr = "0.0.0.0:9102",
       envoy_tracing_json = <<EOF
 {

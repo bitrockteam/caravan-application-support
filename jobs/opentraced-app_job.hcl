@@ -20,8 +20,12 @@ job "opentraced-app" {
           name = "opentraced-app"
           port = "http"
 
+          tags = [
+            "springboot"
+          ]
+
           connect {
-            sidecar_service {}
+            sidecar_service { }
             sidecar_task {
                 name  = "connect-opentraced-app"
                 driver = "exec"
@@ -39,10 +43,45 @@ job "opentraced-app" {
           check {
             type     = "http"
             protocol = "http"
-            port     = "http"
+            port     = "http_mgmt"
             interval = "25s"
             timeout  = "35s"
-            path     = "/health"
+            path     = "/actuator/health"
+          }
+        }
+
+        service {
+          name = "opentraced-app"
+          port = "http_mgmt"
+
+          tags = [
+            "springboot", "actuator"
+          ]
+
+          connect {
+            sidecar_service {}
+            sidecar_task {
+                name  = "connect-opentraced-app"
+                driver = "exec"
+                config {
+                    command = "/usr/bin/envoy"
+                    args  = [
+                        "-c",
+                        "$${NOMAD_SECRETS_DIR}/envoy_bootstrap.json",
+                        "-l",
+                        "$${meta.connect.log_level}"
+                    ]
+                }
+            }
+          }
+
+          check {
+            type     = "http"
+            protocol = "http"
+            port     = "http_mgmt"
+            interval = "25s"
+            timeout  = "35s"
+            path     = "/actuator/health"
           }
         }
 
@@ -77,6 +116,11 @@ job "opentraced-app" {
                     udp-sender:
                       host: jaeger-agent.${services_domain}
                       port: 6831
+                management:
+                  endpoints:
+                    web:
+                      exposure:
+                        include: "*"
               EOT
               destination = "local/application.yml"
             }
