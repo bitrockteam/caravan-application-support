@@ -25,6 +25,17 @@ resource "nomad_job" "logstash" {
   )
 }
 
+resource "nomad_job" "kibana" {
+  jobspec = templatefile(
+    "${path.module}/jobs/kibana_job.hcl",
+    {
+      dc_names              = var.dc_names
+      services_domain       = var.services_domain
+      subdomain             = var.subdomain
+    }
+  )
+}
+
 resource "nomad_job" "consul-ingress" {
   jobspec = templatefile(
     "${path.module}/jobs/consul-ingress.hcl",
