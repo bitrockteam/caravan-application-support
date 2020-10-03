@@ -18,6 +18,9 @@ job "kibana" {
                 static = 5601
                 to = 5601
             }
+            dns {
+                servers = ["10.128.0.10", "8.8.8.8"]
+            }
         }
         service {
             name = "kibana"
@@ -43,11 +46,10 @@ job "kibana" {
 
             config {
                 image = "docker.elastic.co/kibana/kibana:7.9.1"
-                dns_servers = ["$${attr.unique.network.ip-address}"]
             }
 
             env {
-                SERVER_NAME = "kibana.hashicorp.cloud.bitrock.it"
+                SERVER_NAME = "kibana.$${subdomain}.cloud.bitrock.it"
                 SERVER_PORT = "$${NOMAD_PORT_http}"
                 ELASTICSEARCH_HOSTS = "http://elastic-internal.${services_domain}:9200"
                 TELEMETRY_ENABLED = "false"
