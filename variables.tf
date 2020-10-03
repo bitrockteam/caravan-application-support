@@ -4,6 +4,9 @@ variable "dc_names" {
 variable "external_domain" {
   type = string
 }
+variable "subdomain" {
+  type = string
+}
 variable "services_domain" {
   type = string
 }
@@ -30,10 +33,6 @@ variable "vault_skip_tls_verify" {
   type    = bool
   default = false
 }
-variable "ca_cert_file" {
-  default = null
-}
-
 variable "cloud" {
   type        = string
   default     = ""

@@ -52,7 +52,7 @@ job "echo-server" {
             }
 
             artifact {
-                source = "${artifacts_source_prefix}echo-server",
+                source = "${artifacts_source_prefix}/echo-server",
                 destination = "local/"
             }
 
