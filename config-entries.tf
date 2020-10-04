@@ -5,26 +5,27 @@ resource "consul_config_entry" "proxy_defaults" {
   config_json = jsonencode({
     Config = {
       protocol = "http",
-      envoy_prometheus_bind_addr = "0.0.0.0:9102",
-      envoy_tracing_json = <<EOF
-{
-  "http": {
-    "name": "envoy.tracers.dynamic_ot",
-    "config": {
-      "library": "/usr/local/lib/libjaegertracing_plugin.so",
-      "config": {
-        "sampler" {
-          "type": "const"
-          "param": 1
-        },
-        "reporter": {
-          "localAgentHostPort": "jaeger.service.consul:6831"
-        }
-      }
-    }
-  }
-}
-EOF
+#       envoy_prometheus_bind_addr = "0.0.0.0:9102",
+#       envoy_tracing_json = <<EOF
+# {
+#   "http": {
+#     "name": "envoy.tracers.dynamic_ot",
+#     "config": {
+#       "library": "/usr/local/lib/libjaegertracing_plugin.so",
+#       "config": {
+#         "service_name": "opentraced-app",
+#         "sampler": {
+#           "type": "const",
+#           "param": 1
+#         },
+#         "reporter": {
+#           "localAgentHostPort": "jaeger.service.consul:6831"
+#         }
+#       }
+#     }
+#   }
+# }
+# EOF
     }
   })
 }

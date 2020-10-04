@@ -14,6 +14,10 @@ job "opentraced-app" {
             mode = "bridge"
             port "http" {}
             port "http_mgmt" {}
+            port "envoy_prom" {
+              static = "29102"
+              to = "29102"
+            }
         }
 
         service {
@@ -21,11 +25,19 @@ job "opentraced-app" {
           port = "http"
 
           tags = [
-            "springboot"
+            "springboot", "ProxyPromPort:29102"
           ]
 
           connect {
-            sidecar_service { }
+            sidecar_service {
+
+                proxy {
+                    config {
+                        envoy_prometheus_bind_addr = "0.0.0.0:29102"
+                        envoy_tracing_json = "{\n  \"http\": {\n    \"name\": \"envoy.tracers.dynamic_ot\",\n    \"config\": {\n      \"library\": \"/usr/local/lib/libjaegertracing_plugin.so\",\n      \"config\": {\n        \"service_name\": \"opentraced-app\",\n        \"sampler\": {\n          \"type\": \"const\",\n          \"param\": 1\n        },\n        \"reporter\": {\n          \"localAgentHostPort\": \"jaeger.service.consul:6831\"\n        }\n      }\n    }\n  }\n}"
+                    }
+                }
+            }
             sidecar_task {
                 name  = "connect-opentraced-app"
                 driver = "exec"
@@ -58,22 +70,6 @@ job "opentraced-app" {
             "springboot", "actuator"
           ]
 
-          connect {
-            sidecar_service {}
-            sidecar_task {
-                name  = "connect-opentraced-app"
-                driver = "exec"
-                config {
-                    command = "/usr/bin/envoy"
-                    args  = [
-                        "-c",
-                        "$${NOMAD_SECRETS_DIR}/envoy_bootstrap.json",
-                        "-l",
-                        "$${meta.connect.log_level}"
-                    ]
-                }
-            }
-          }
 
           check {
             type     = "http"
@@ -139,7 +135,7 @@ job "opentraced-app" {
             }
 
             artifact {
-                source = "${artifacts_source_prefix}/OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
+                source = "${artifacts_source_prefix}OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
                 destination = "local/"
             }
         }
