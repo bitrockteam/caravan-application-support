@@ -140,7 +140,7 @@ job "opentraced-app" {
             }
 
             artifact {
-                source = "${artifacts_source_prefix}OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
+                source = "${artifacts_source_prefix}/OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
                 destination = "local/"
             }
         }
