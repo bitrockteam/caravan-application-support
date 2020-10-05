@@ -40,8 +40,9 @@ EOL
   "http": {
       "config": {
           "collector_cluster": "jaeger_9411",
-          "collector_endpoint": "/api/v1/spans",
-          "shared_span_context": false
+          "collector_endpoint": "/api/v2/spans",
+          "shared_span_context": false,
+          "collector_endpoint_version": "HTTP_JSON"
       },
       "name": "envoy.zipkin"
   }
