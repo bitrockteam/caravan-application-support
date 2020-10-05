@@ -20,7 +20,7 @@ envoy_extra_static_clusters_json = <<EOL
                       "endpoint": {
                           "address": {
                               "socket_address": {
-                                  "address": "jaeger-collector.service.consul",
+                                  "address": "10.128.0.4",
                                   "port_value": 9411,
                                   "protocol": "TCP"
                               }
@@ -40,7 +40,8 @@ EOL
   "http": {
       "config": {
           "collector_cluster": "jaeger_9411",
-          "collector_endpoint": "/api/v1/spans"
+          "collector_endpoint": "/api/v1/spans",
+          "shared_span_context": false
       },
       "name": "envoy.zipkin"
   }

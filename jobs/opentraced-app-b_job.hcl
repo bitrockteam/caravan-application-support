@@ -38,7 +38,8 @@ job "opentraced-app-b" {
                     }
                     config {
                         envoy_prometheus_bind_addr = "0.0.0.0:29103"
-                        envoy_tracing_json = "{\n  \"http\": {\n    \"name\": \"envoy.tracers.dynamic_ot\",\n    \"config\": {\n      \"library\": \"/usr/local/lib/libjaegertracing_plugin.so\",\n      \"config\": {\n        \"service_name\": \"opentraced-app\",\n        \"sampler\": {\n          \"type\": \"const\",\n          \"param\": 1\n        },\n        \"reporter\": {\n          \"localAgentHostPort\": \"jaeger-agent.service.consul:6831\"\n        }\n      }\n    }\n  }\n}"
+                        envoy_extra_static_clusters_json = "{\n  \"connect_timeout\": \"3.000s\",\n  \"dns_lookup_family\": \"V4_ONLY\",\n  \"lb_policy\": \"ROUND_ROBIN\",\n  \"load_assignment\": {\n      \"cluster_name\": \"jaeger_9411\",\n      \"endpoints\": [\n          {\n              \"lb_endpoints\": [\n                  {\n                      \"endpoint\": {\n                          \"address\": {\n                              \"socket_address\": {\n                                  \"address\": \"10.128.0.4\",\n                                  \"port_value\": 9411,\n                                  \"protocol\": \"TCP\"\n                              }\n                          }\n                      }\n                  }\n              ]\n          }\n      ]\n  },\n  \"name\": \"jaeger_9411\",\n  \"type\": \"STRICT_DNS\"\n}\n",
+                        envoy_tracing_json = "{\n  \"http\": {\n      \"config\": {\n          \"collector_cluster\": \"jaeger_9411\",\n          \"collector_endpoint\": \"/api/v1/spans\"\n      },\n      \"name\": \"envoy.zipkin\"\n  }\n}\n"
                     }
                 }
             }
@@ -50,7 +51,8 @@ job "opentraced-app-b" {
                         "-c",
                         "$${NOMAD_SECRETS_DIR}/envoy_bootstrap.json",
                         "-l",
-                        "$${meta.connect.log_level}"
+                        "$${meta.connect.log_level}",
+                        "--disable-hot-restart"
                     ]
                 }
             }
