@@ -13,18 +13,15 @@ job "echo-server" {
         network {
             mode = "bridge"
             port "http" {}
-            port "envoy_prom" {
-              static = "29109"
-              to = "29109"
+            port "http_envoy_prom" {
+              to = "9102"
             }
         }
 
         service {
           name = "echo-server"
           port = "http"
-          tags = [
-            "ProxyPromPort:29109"
-          ]
+          tags = []
           connect {
               sidecar_service {
                   proxy {
@@ -41,7 +38,7 @@ job "echo-server" {
                         local_bind_port = 8082
                     }
                     config {
-                        envoy_prometheus_bind_addr = "0.0.0.0:29109"
+                        envoy_prometheus_bind_addr = "0.0.0.0:9102"
                         envoy_extra_static_clusters_json = "{\n  \"connect_timeout\": \"3.000s\",\n  \"dns_lookup_family\": \"V4_ONLY\",\n  \"lb_policy\": \"ROUND_ROBIN\",\n  \"load_assignment\": {\n      \"cluster_name\": \"jaeger_9411\",\n      \"endpoints\": [\n          {\n              \"lb_endpoints\": [\n                  {\n                      \"endpoint\": {\n                          \"address\": {\n                              \"socket_address\": {\n                                  \"address\": \"10.128.0.4\",\n                                  \"port_value\": 9411,\n                                  \"protocol\": \"TCP\"\n                              }\n                          }\n                      }\n                  }\n              ]\n          }\n      ]\n  },\n  \"name\": \"jaeger_9411\",\n  \"type\": \"STRICT_DNS\"\n}\n",
                         envoy_tracing_json = "{\n  \"http\": {\n      \"config\": {\n          \"collector_cluster\": \"jaeger_9411\",\n          \"collector_endpoint\": \"/api/v2/spans\",\n          \"shared_span_context\": false,\n          \"collector_endpoint_version\": \"HTTP_JSON\"\n      },\n      \"name\": \"envoy.zipkin\"\n  }\n}\n"
                     }
@@ -56,6 +53,15 @@ job "echo-server" {
             timeout  = "35s"
             path     = "/health"
           }
+        }
+
+        service {
+          name = "echo-server"
+          port = "http_envoy_prom"
+
+          tags = [
+            "envoy", "prometheus"
+          ]
         }
 
         task "echo-server" {
