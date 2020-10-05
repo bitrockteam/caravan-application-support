@@ -36,6 +36,12 @@ job "kibana" {
             connect {
                 sidecar_service {
                     port = "http"
+                    proxy {
+                    upstreams {
+                        destination_name = "elastic-internal"
+                        local_bind_port = 9200
+                    }
+                  }
                 }
             }
 
@@ -51,7 +57,7 @@ job "kibana" {
             env {
                 SERVER_NAME = "kibana.$${subdomain}.cloud.bitrock.it"
                 SERVER_PORT = "$${NOMAD_PORT_http}"
-                ELASTICSEARCH_HOSTS = "http://elastic-internal.${services_domain}:9200"
+                ELASTICSEARCH_HOSTS = "http://localhost:9200"
                 TELEMETRY_ENABLED = "false"
                 MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED = "false"
                 STATUS.ALLOWANONYMOUS = "true"
