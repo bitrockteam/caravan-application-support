@@ -9,7 +9,7 @@ job "opentraced-app-b" {
         value     = "^defwrkr-"
     }
 
-    group "java-springboot" {
+    group "java-springboot-b" {
         network {
             mode = "bridge"
             port "http" {}
@@ -97,7 +97,7 @@ job "opentraced-app-b" {
                 args = ["lo"]
             }
         }
-        task "java-springboot" {
+        task "java-springboot-b" {
             driver = "exec"
 
             resources {
@@ -116,7 +116,7 @@ job "opentraced-app-b" {
                 opentracing:
                   jaeger:
                     service-name: springboot-app-b
-                    enabled: true
+                    enabled: TRUE
                     udp-sender:
                       host: jaeger-agent.${services_domain}
                       port: 6831
