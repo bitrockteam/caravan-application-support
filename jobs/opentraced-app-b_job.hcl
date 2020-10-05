@@ -1,4 +1,4 @@
-job "opentraced-app" {
+job "opentraced-app-b" {
     datacenters = [
         %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
     ]
@@ -15,31 +15,34 @@ job "opentraced-app" {
             port "http" {}
             port "http_mgmt" {}
             port "envoy_prom" {
-              static = "29102"
-              to = "29102"
+              static = "29103"
+              to = "29103"
             }
         }
 
         service {
-          name = "opentraced-app"
+          name = "opentraced-app-b"
           port = "http"
 
           tags = [
-            "springboot", "ProxyPromPort:29102"
+            "springboot", "ProxyPromPort:29103"
           ]
 
           connect {
             sidecar_service {
 
                 proxy {
+                    upstreams {
+                      destination_name = "opentraced-app"
+                      local_bind_port  = 8080
+                    }
                     config {
-                        envoy_prometheus_bind_addr = "0.0.0.0:29102"
+                        envoy_prometheus_bind_addr = "0.0.0.0:29103"
                         envoy_tracing_json = "{\n  \"http\": {\n    \"name\": \"envoy.tracers.dynamic_ot\",\n    \"config\": {\n      \"library\": \"/usr/local/lib/libjaegertracing_plugin.so\",\n      \"config\": {\n        \"service_name\": \"opentraced-app\",\n        \"sampler\": {\n          \"type\": \"const\",\n          \"param\": 1\n        },\n        \"reporter\": {\n          \"localAgentHostPort\": \"jaeger.service.consul:6831\"\n        }\n      }\n    }\n  }\n}"
                     }
                 }
             }
             sidecar_task {
-                name  = "connect-opentraced-app"
                 driver = "exec"
                 config {
                     command = "/usr/bin/envoy"
@@ -63,7 +66,7 @@ job "opentraced-app" {
         }
 
         service {
-          name = "opentraced-app"
+          name = "opentraced-app-b"
           port = "http_mgmt"
 
           tags = [
@@ -107,11 +110,11 @@ job "opentraced-app" {
               data = <<-EOT
                 spring:
                   application:
-                    name: springboot-app
+                    name: springboot-app-b
                 opentracing:
                   jaeger:
-                    service-name: springboot-app
-                    enabled: TRUE
+                    service-name: springboot-app-b
+                    enabled: true
                     udp-sender:
                       host: jaeger-agent.${services_domain}
                       port: 6831
@@ -133,12 +136,12 @@ job "opentraced-app" {
                   "-Xmx2048m",
                   "-Xms256m",
                   "-Dspring.config.location=local/application.yml",
-                  "-jar", "local/OpenTracing-AppA-0.0.1-SNAPSHOT.jar"
+                  "-jar", "local/OpenTracing-AppB-0.0.1-SNAPSHOT.jar"
                 ]
             }
 
             artifact {
-                source = "${artifacts_source_prefix}OpenTracing-AppA-0.0.1-SNAPSHOT.jar",
+                source = "${artifacts_source_prefix}OpenTracing-AppB-0.0.1-SNAPSHOT.jar",
                 destination = "local/"
             }
         }

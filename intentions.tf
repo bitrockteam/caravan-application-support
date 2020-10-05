@@ -81,3 +81,9 @@ resource "consul_intention" "echo-server_kibana" {
   destination_name = "kibana"
   action           = "allow"
 }
+
+resource "consul_intention" "opentraced-app-b_pentraced-app" {
+  source_name      = "opentraced-app-b"
+  destination_name = "opentraced-app"
+  action           = "allow"
+}
