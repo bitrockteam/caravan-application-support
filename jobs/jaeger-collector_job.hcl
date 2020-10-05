@@ -23,6 +23,9 @@ job "jaeger-collector" {
             port "http_span" {
                 static = 14250
             }
+            port "http_zipkin_span" {
+                static = 9411
+            }
         }
         service {
             name = "jaeger-collector"
@@ -49,7 +52,8 @@ job "jaeger-collector" {
                 command = "/usr/local/bin/jaeger-collector"
                 args = [
                     "--admin.http.host-port=0.0.0.0:$${NOMAD_PORT_http_admin}",
-                    "--collector.grpc-server.host-port=0.0.0.0:$${NOMAD_PORT_http_span}"
+                    "--collector.grpc-server.host-port=0.0.0.0:$${NOMAD_PORT_http_span}",
+                    "--collector.zipkin.http-port=$${NOMAD_PORT_http_zipkin_span}"
                 ]
             }
 

@@ -38,7 +38,7 @@ job "opentraced-app-b" {
                     }
                     config {
                         envoy_prometheus_bind_addr = "0.0.0.0:29103"
-                        envoy_tracing_json = "{\n  \"http\": {\n    \"name\": \"envoy.tracers.dynamic_ot\",\n    \"config\": {\n      \"library\": \"/usr/local/lib/libjaegertracing_plugin.so\",\n      \"config\": {\n        \"service_name\": \"opentraced-app\",\n        \"sampler\": {\n          \"type\": \"const\",\n          \"param\": 1\n        },\n        \"reporter\": {\n          \"localAgentHostPort\": \"jaeger.service.consul:6831\"\n        }\n      }\n    }\n  }\n}"
+                        envoy_tracing_json = "{\n  \"http\": {\n    \"name\": \"envoy.tracers.dynamic_ot\",\n    \"config\": {\n      \"library\": \"/usr/local/lib/libjaegertracing_plugin.so\",\n      \"config\": {\n        \"service_name\": \"opentraced-app\",\n        \"sampler\": {\n          \"type\": \"const\",\n          \"param\": 1\n        },\n        \"reporter\": {\n          \"localAgentHostPort\": \"jaeger-agent.service.consul:6831\"\n        }\n      }\n    }\n  }\n}"
                     }
                 }
             }

@@ -22,6 +22,12 @@ resource "consul_intention" "jaeger-agent" {
   action           = "allow"
 }
 
+resource "consul_intention" "jaeger-collector" {
+  source_name      = "*"
+  destination_name = "jaeger-collector"
+  action           = "allow"
+}
+
 resource "consul_intention" "ingress_jaeger-query" {
   source_name      = "ingress-gateway"
   destination_name = "jaeger-query"
