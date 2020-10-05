@@ -93,3 +93,9 @@ resource "consul_intention" "opentraced-app-b_pentraced-app" {
   destination_name = "opentraced-app"
   action           = "allow"
 }
+
+resource "consul_intention" "echo-server_opentraced-app" {
+  source_name      = "echo-server"
+  destination_name = "opentraced-app"
+  action           = "allow"
+}
