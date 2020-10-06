@@ -46,9 +46,10 @@ job "kibana" {
                             local_bind_port = 9200
                         }
                         config {
+                            protocol = "http"
                             envoy_prometheus_bind_addr = "0.0.0.0:9102"
                             envoy_extra_static_clusters_json = "{\n  \"connect_timeout\": \"3.000s\",\n  \"dns_lookup_family\": \"V4_ONLY\",\n  \"lb_policy\": \"ROUND_ROBIN\",\n  \"load_assignment\": {\n      \"cluster_name\": \"jaeger_9411\",\n      \"endpoints\": [\n          {\n              \"lb_endpoints\": [\n                  {\n                      \"endpoint\": {\n                          \"address\": {\n                              \"socket_address\": {\n                                  \"address\": \"10.128.0.4\",\n                                  \"port_value\": 9411,\n                                  \"protocol\": \"TCP\"\n                              }\n                          }\n                      }\n                  }\n              ]\n          }\n      ]\n  },\n  \"name\": \"jaeger_9411\",\n  \"type\": \"STRICT_DNS\"\n}\n",
-                            envoy_tracing_json = "{\n  \"http\": {\n      \"config\": {\n          \"collector_cluster\": \"jaeger_9411\",\n          \"collector_endpoint\": \"/api/v2/spans\",\n          \"shared_span_context\": false,\n          \"collector_endpoint_version\": \"HTTP_JSON\"\n      },\n      \"name\": \"envoy.zipkin\"\n  }\n}\n"
+                            envoy_tracing_json = "{\n  \"http\": {\n      \"typed_config\": {\n          \"@type\": \"type.googleapis.com/envoy.config.trace.v2.ZipkinConfig\",\n          \"collector_cluster\": \"jaeger_9411\",\n          \"collector_endpoint\": \"/api/v2/spans\",\n          \"shared_span_context\": false,\n          \"collector_endpoint_version\": \"HTTP_JSON\"\n      },\n      \"name\": \"envoy.tracers.zipkin\"\n  }\n}\n"
                         }
                     }
                 }

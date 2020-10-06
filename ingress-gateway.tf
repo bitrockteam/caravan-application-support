@@ -41,7 +41,14 @@ resource "consul_config_entry" "ingress_gateway" {
             "echo.${var.domain}",
             "echo.${var.domain}:8080",
           ]
-        }
+        },
+        {
+          Name = "opentraced-app-b"
+          Hosts = [
+            "opentraced-app-b.${var.domain}",
+            "opentraced-app-b.${var.domain}:8080",
+          ]
+        },
       ]
     }]
   })

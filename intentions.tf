@@ -99,3 +99,9 @@ resource "consul_intention" "echo-server_opentraced-app" {
   destination_name = "opentraced-app"
   action           = "allow"
 }
+
+resource "consul_intention" "ingress_opentraced-app-b" {
+  source_name      = "ingress-gateway"
+  destination_name = "opentraced-app-b"
+  action           = "allow"
+}

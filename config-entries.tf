@@ -38,13 +38,14 @@ EOL
   envoy_tracing_json = <<EOL
 {
   "http": {
-      "config": {
+      "typed_config": {
+          "@type": "type.googleapis.com/envoy.config.trace.v2.ZipkinConfig",
           "collector_cluster": "jaeger_9411",
           "collector_endpoint": "/api/v2/spans",
           "shared_span_context": false,
           "collector_endpoint_version": "HTTP_JSON"
       },
-      "name": "envoy.zipkin"
+      "name": "envoy.tracers.zipkin"
   }
 }
 EOL
