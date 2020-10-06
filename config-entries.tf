@@ -5,7 +5,7 @@ resource "consul_config_entry" "proxy_defaults" {
   config_json = jsonencode({
     Config = {
       protocol = "http",
-#       envoy_prometheus_bind_addr = "0.0.0.0:9102",
+      envoy_prometheus_bind_addr = "0.0.0.0:9102",
 envoy_extra_static_clusters_json = <<EOL
 {
   "connect_timeout": "3.000s",
