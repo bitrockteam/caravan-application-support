@@ -4,9 +4,9 @@ resource "consul_config_entry" "proxy_defaults" {
 
   config_json = jsonencode({
     Config = {
-      protocol = "http",
-      envoy_prometheus_bind_addr = "0.0.0.0:9102",
-envoy_extra_static_clusters_json = <<EOL
+      protocol                         = "http",
+      envoy_prometheus_bind_addr       = "0.0.0.0:9102",
+      envoy_extra_static_clusters_json = <<EOL
 {
   "connect_timeout": "3.000s",
   "dns_lookup_family": "V4_ONLY",
@@ -35,7 +35,7 @@ envoy_extra_static_clusters_json = <<EOL
   "type": "STRICT_DNS"
 }
 EOL
-  envoy_tracing_json = <<EOL
+      envoy_tracing_json               = <<EOL
 {
   "http": {
       "typed_config": {

@@ -29,9 +29,9 @@ resource "nomad_job" "kibana" {
   jobspec = templatefile(
     "${path.module}/jobs/kibana_job.hcl",
     {
-      dc_names              = var.dc_names
-      services_domain       = var.services_domain
-      subdomain             = var.subdomain
+      dc_names        = var.dc_names
+      services_domain = var.services_domain
+      domain          = var.domain
     }
   )
 }
