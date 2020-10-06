@@ -1,10 +1,7 @@
 variable "dc_names" {
   type = list(string)
 }
-variable "external_domain" {
-  type = string
-}
-variable "subdomain" {
+variable "domain" {
   type = string
 }
 variable "services_domain" {

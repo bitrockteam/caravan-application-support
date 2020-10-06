@@ -10,36 +10,36 @@ resource "consul_config_entry" "ingress_gateway" {
         {
           Name = "jaeger-query"
           Hosts = [
-            "jaeger.${var.subdomain}.${var.external_domain}",
-            "jaeger.${var.subdomain}.${var.external_domain}:8080",
+            "jaeger.${var.domain}",
+            "jaeger.${var.domain}:8080",
           ]
         },
         {
           Name = "grafana-internal"
           Hosts = [
-            "grafana-internal.${var.subdomain}.${var.external_domain}",
-            "grafana-internal.${var.subdomain}.${var.external_domain}:8080",
+            "grafana-internal.${var.domain}",
+            "grafana-internal.${var.domain}:8080",
           ]
         },
         {
           Name = "kibana"
           Hosts = [
-            "kibana.${var.subdomain}.${var.external_domain}",
-            "kibana.${var.subdomain}.${var.external_domain}:8080",
+            "kibana.${var.domain}",
+            "kibana.${var.domain}:8080",
           ]
         },
         {
           Name = "prometheus"
           Hosts = [
-            "prometheus.${var.subdomain}.${var.external_domain}",
-            "prometheus.${var.subdomain}.${var.external_domain}:8080",
+            "prometheus.${var.domain}",
+            "prometheus.${var.domain}:8080",
           ]
         },
         {
           Name = "echo-server"
           Hosts = [
-            "echo.${var.subdomain}.${var.external_domain}",
-            "echo.${var.subdomain}.${var.external_domain}:8080",
+            "echo.${var.domain}",
+            "echo.${var.domain}:8080",
           ]
         }
       ]
