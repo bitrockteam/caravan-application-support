@@ -31,6 +31,7 @@ job "consul-ingress" {
         args = [
           "connect", "envoy",
           "-envoy-binary", "/usr/bin/envoy",
+          "-envoy-version", "1.14.2",
           "-gateway=ingress",
           "-register",
           "-service", "ingress-gateway",
