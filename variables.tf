@@ -35,3 +35,11 @@ variable "cloud" {
   default     = ""
   description = "Allow to deploy cloud specific jobs"
 }
+variable "gcp_project_id" {
+  type = string
+  default = null
+}
+variable "gcp_region" {
+  type = string
+  default = null
+}
