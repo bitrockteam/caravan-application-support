@@ -29,6 +29,13 @@ resource "consul_config_entry" "ingress_gateway" {
           ]
         },
         {
+          Name = "jenkins"
+          Hosts = [
+            "jenkins.${var.domain}",
+            "jenkins.${var.domain}:8080",
+          ]
+        },
+        {
           Name = "prometheus"
           Hosts = [
             "prometheus.${var.domain}",

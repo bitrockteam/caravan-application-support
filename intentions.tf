@@ -105,3 +105,9 @@ resource "consul_intention" "ingress_opentraced-app-b" {
   destination_name = "opentraced-app-b"
   action           = "allow"
 }
+
+resource "consul_intention" "ingress_jenkins" {
+  source_name      = "ingress-gateway"
+  destination_name = "jenkins"
+  action           = "allow"
+}
