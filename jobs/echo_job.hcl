@@ -16,6 +16,9 @@ job "echo-server" {
             port "http_envoy_prom" {
               to = "9102"
             }
+            dns {
+                servers = ["192.168.0.1"]
+            }
         }
 
         service {
@@ -71,10 +74,6 @@ job "echo-server" {
             resources {
                 cpu    = 200
                 memory = 250
-            }
-            template {
-              data = "nameserver {{env `NOMAD_HOST_IP_http`}}"
-              destination = "etc/resolv.conf"
             }
 
             artifact {

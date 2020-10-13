@@ -17,6 +17,9 @@ job "opentraced-app" {
             port "http_envoy_prom" {
               to = "9102"
             }
+            dns {
+                servers = ["192.168.0.1"]
+            }
         }
 
         service {
@@ -110,10 +113,7 @@ job "opentraced-app" {
                 cpu    = 200
                 memory = 2048
             }
-            template {
-              data = "nameserver {{env `NOMAD_HOST_IP_http`}}"
-              destination = "etc/resolv.conf"
-            }
+            
             template {
               data = <<-EOT
                 spring:
