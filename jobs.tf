@@ -10,6 +10,7 @@ resource "nomad_job" "app" {
       dc_names                = var.dc_names
       services_domain         = var.services_domain
       artifacts_source_prefix = var.artifacts_source_prefix
+      container_registry      = var.container_registry
     }
   )
 }
@@ -29,9 +30,10 @@ resource "nomad_job" "kibana" {
   jobspec = templatefile(
     "${path.module}/jobs/kibana_job.hcl",
     {
-      dc_names        = var.dc_names
-      services_domain = var.services_domain
-      domain          = var.domain
+      dc_names           = var.dc_names
+      services_domain    = var.services_domain
+      domain             = var.domain
+      container_registry = var.container_registry
     }
   )
 }

@@ -43,3 +43,7 @@ variable "gcp_region" {
   type = string
   default = null
 }
+variable "container_registry" {
+  type = string
+  default = "us.gcr.io/hcpoc-terraform-admin"
+}
