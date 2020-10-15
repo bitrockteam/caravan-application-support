@@ -11,6 +11,7 @@ resource "nomad_job" "app" {
       services_domain         = var.services_domain
       artifacts_source_prefix = var.artifacts_source_prefix
       container_registry      = var.container_registry
+      domain                  = var.domain
     }
   )
 }
@@ -22,18 +23,6 @@ resource "nomad_job" "logstash" {
       dc_names              = var.dc_names
       services_domain       = var.services_domain
       logstash_index_prefix = var.logstash_index_prefix
-    }
-  )
-}
-
-resource "nomad_job" "kibana" {
-  jobspec = templatefile(
-    "${path.module}/jobs/kibana_job.hcl",
-    {
-      dc_names           = var.dc_names
-      services_domain    = var.services_domain
-      domain             = var.domain
-      container_registry = var.container_registry
     }
   )
 }
