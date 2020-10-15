@@ -7,6 +7,10 @@ variable "domain" {
 variable "services_domain" {
   type = string
 }
+variable "container_registry" {
+  type = string
+  default = "us.gcr.io/hcpoc-terraform-admin"
+}
 variable "artifacts_source_prefix" {
   type = string
 }
@@ -42,8 +46,4 @@ variable "gcp_project_id" {
 variable "gcp_region" {
   type = string
   default = null
-}
-variable "container_registry" {
-  type = string
-  default = "us.gcr.io/hcpoc-terraform-admin"
 }

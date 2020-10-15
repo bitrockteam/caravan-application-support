@@ -70,11 +70,11 @@ job "kibana" {
             driver = "docker"
 
             config {
-                image = "$${container_registry}/kibana/kibana:7.9.1"
+                image = "${container_registry}/kibana/kibana:7.9.1"
             }
 
             env {
-                SERVER_NAME = "kibana.$${subdomain}.cloud.bitrock.it"
+                SERVER_NAME = "kibana.${domain}"
                 SERVER_PORT = "$${NOMAD_PORT_http}"
                 ELASTICSEARCH_HOSTS = "http://localhost:9200"
                 TELEMETRY_ENABLED = "false"
