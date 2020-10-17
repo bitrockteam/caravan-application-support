@@ -18,6 +18,11 @@ provider "consul" {
   token          = data.vault_generic_secret.consul_bootstrap_token.data["secretid"]
 }
 
+provider "grafana" {
+  url  = "https://grafana-internal.${var.domain}"
+  auth = "admin:admin"
+}
+
 
 provider "nomad" {
   address = var.nomad_endpoint
