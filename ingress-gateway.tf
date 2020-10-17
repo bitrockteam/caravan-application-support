@@ -29,6 +29,13 @@ resource "consul_config_entry" "ingress_gateway" {
           ]
         },
         {
+          Name = "keycloak"
+          Hosts = [
+            "keycloak.${var.domain}",
+            "keycloak.${var.domain}:8080",
+          ]
+        },
+        {
           Name = "jenkins"
           Hosts = [
             "jenkins.${var.domain}",
