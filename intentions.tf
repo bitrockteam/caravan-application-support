@@ -40,6 +40,12 @@ resource "consul_intention" "ingress_kibana" {
   action           = "allow"
 }
 
+resource "consul_intention" "ingress_keycloak" {
+  source_name      = "ingress-gateway"
+  destination_name = "keycloak"
+  action           = "allow"
+}
+
 resource "consul_intention" "ingress_grafana" {
   source_name      = "ingress-gateway"
   destination_name = "grafana-internal"
