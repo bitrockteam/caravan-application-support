@@ -63,6 +63,13 @@ resource "consul_config_entry" "ingress_gateway" {
             "opentraced-app-b.${var.domain}:8080",
           ]
         },
+        {
+          Name = "waypoint"
+          Hosts = [
+            "waypoint.${var.domain}",
+            "waypoint.${var.domain}:8080",
+          ]
+        },
       ]
     }]
   })
