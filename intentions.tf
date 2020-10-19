@@ -46,6 +46,12 @@ resource "consul_intention" "ingress_keycloak" {
   action           = "allow"
 }
 
+resource "consul_intention" "ingress_waypoint" {
+  source_name      = "ingress-gateway"
+  destination_name = "waypoint"
+  action           = "allow"
+}
+
 resource "consul_intention" "ingress_grafana" {
   source_name      = "ingress-gateway"
   destination_name = "grafana-internal"
