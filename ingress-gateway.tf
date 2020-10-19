@@ -64,7 +64,7 @@ resource "consul_config_entry" "ingress_gateway" {
           ]
         },
         {
-          Name = "waypoint"
+          Name = "waypoint-server"
           Hosts = [
             "waypoint.${var.domain}",
             "waypoint.${var.domain}:8080",
