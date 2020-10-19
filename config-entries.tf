@@ -20,7 +20,7 @@ resource "consul_config_entry" "proxy_defaults" {
                       "endpoint": {
                           "address": {
                               "socket_address": {
-                                  "address": "10.128.0.8",
+                                  "address": "monitoring.node.${var.dc_names[0]}.consul",
                                   "port_value": 9411,
                                   "protocol": "TCP"
                               }
