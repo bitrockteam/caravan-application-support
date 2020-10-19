@@ -48,7 +48,7 @@ resource "consul_intention" "ingress_keycloak" {
 
 resource "consul_intention" "ingress_waypoint" {
   source_name      = "ingress-gateway"
-  destination_name = "waypoint"
+  destination_name = "waypoint-server"
   action           = "allow"
 }
 
