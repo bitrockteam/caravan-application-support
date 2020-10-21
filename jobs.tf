@@ -12,6 +12,7 @@ resource "nomad_job" "app" {
       artifacts_source_prefix = var.artifacts_source_prefix
       container_registry      = var.container_registry
       domain                  = var.domain
+      nameserver_dummy_ip     = var.nameserver_dummy_ip
     }
   )
 }

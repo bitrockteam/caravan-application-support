@@ -47,3 +47,8 @@ variable "gcp_region" {
   type = string
   default = null
 }
+variable "nameserver_dummy_ip" {
+  type    = string
+  default = "192.168.0.1"
+}
+
