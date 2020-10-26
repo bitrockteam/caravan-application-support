@@ -4,18 +4,6 @@ resource "consul_intention" "esm" {
   action           = "allow"
 }
 
-resource "consul_intention" "logstash-tcp" {
-  source_name      = "*"
-  destination_name = "logstash-tcp"
-  action           = "allow"
-}
-
-resource "consul_intention" "logstash-http" {
-  source_name      = "*"
-  destination_name = "logstash-http"
-  action           = "allow"
-}
-
 resource "consul_intention" "jaeger-agent" {
   source_name      = "*"
   destination_name = "jaeger-agent"

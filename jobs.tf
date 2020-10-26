@@ -17,17 +17,6 @@ resource "nomad_job" "app" {
   )
 }
 
-resource "nomad_job" "logstash" {
-  jobspec = templatefile(
-    "${path.module}/jobs/logstash.hcl",
-    {
-      dc_names              = var.dc_names
-      services_domain       = var.services_domain
-      logstash_index_prefix = var.logstash_index_prefix
-    }
-  )
-}
-
 resource "nomad_job" "consul-ingress" {
   jobspec = templatefile(
     "${path.module}/jobs/consul-ingress.hcl",
