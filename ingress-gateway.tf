@@ -1,4 +1,7 @@
 resource "consul_config_entry" "ingress_gateway" {
+  depends_on = [
+    consul_config_entry.proxy_defaults
+  ]
   name = "ingress-gateway"
   kind = "ingress-gateway"
 
