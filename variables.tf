@@ -8,7 +8,7 @@ variable "services_domain" {
   type = string
 }
 variable "container_registry" {
-  type = string
+  type    = string
   default = "us.gcr.io/hcpoc-terraform-admin"
 }
 variable "artifacts_source_prefix" {
@@ -34,17 +34,21 @@ variable "vault_skip_tls_verify" {
   type    = bool
   default = false
 }
+variable "consul_insecure_https" {
+  type    = bool
+  default = false
+}
 variable "cloud" {
   type        = string
   default     = ""
   description = "Allow to deploy cloud specific jobs"
 }
 variable "gcp_project_id" {
-  type = string
+  type    = string
   default = null
 }
 variable "gcp_region" {
-  type = string
+  type    = string
   default = null
 }
 variable "nameserver_dummy_ip" {
@@ -52,3 +56,12 @@ variable "nameserver_dummy_ip" {
   default = "192.168.0.1"
 }
 
+variable "ca_cert_file" {
+  type    = string
+  default = null
+}
+
+variable "configure_grafana" {
+  type    = bool
+  default = true
+}
