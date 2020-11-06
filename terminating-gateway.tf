@@ -21,6 +21,9 @@ resource "consul_config_entry" "terminating_gateway" {
       },
       {
         Name = "prometheus"
+      },
+      {
+        Name = "jenkins"
       }
     ]
   })
