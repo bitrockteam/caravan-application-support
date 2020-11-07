@@ -123,3 +123,9 @@ resource "consul_intention" "nomad_jenkins" {
   destination_name = "jenkins"
   action           = "allow"
 }
+
+resource "consul_intention" "jenkins_jenkins" {
+  source_name      = "*"
+  destination_name = "jenkins"
+  action           = "allow"
+}
