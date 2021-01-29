@@ -43,13 +43,10 @@ variable "cloud" {
   default     = ""
   description = "Allow to deploy cloud specific jobs"
 }
-variable "gcp_project_id" {
+variable "jenkins_volume_external_id" {
+  // example: projects/${var.gcp_project_id}/regions/${var.gcp_region}/disks/jenkins-master
   type    = string
-  default = null
-}
-variable "gcp_region" {
-  type    = string
-  default = null
+  default = ""
 }
 variable "nameserver_dummy_ip" {
   type    = string
