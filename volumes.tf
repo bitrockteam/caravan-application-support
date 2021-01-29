@@ -1,23 +1,22 @@
+// Common
 locals {
-  cloud_to_csi_plugin_id = {
-    "gcp" : "gcepd"
-  }
+  configure_csi = contains(keys(local.cloud_to_csi_plugin_id), var.cloud) ? 1 : 0
 }
 
-// GCP
-data "nomad_plugin" "gcepd" {
-  count = var.cloud == "gcp" ? 1 : 0
+data "nomad_plugin" "csi" {
+  count = local.configure_csi
   depends_on = [
     nomad_job.csi
   ]
   plugin_id        = local.cloud_to_csi_plugin_id[var.cloud]
   wait_for_healthy = true
 }
+
 resource "nomad_volume" "jenkins_master" {
-  count = var.cloud == "gcp" ? 1 : 0
+  count = local.configure_csi
   depends_on = [
     nomad_job.csi,
-    data.nomad_plugin.gcepd
+    data.nomad_plugin.csi
   ]
   type            = "csi"
   plugin_id       = local.cloud_to_csi_plugin_id[var.cloud]
