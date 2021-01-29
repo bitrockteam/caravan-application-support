@@ -28,7 +28,7 @@ EOH
         dns_servers = ["$${attr.unique.network.ip-address}"]
       }
       csi_plugin {
-        id        = "{{ plugin_id }}"
+        id        = "${ plugin_id }"
         type      = "controller"
         mount_dir = "/csi"
       }

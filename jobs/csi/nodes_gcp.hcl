@@ -28,7 +28,7 @@ EOH
         privileged = true
       }
       csi_plugin {
-        id        = "{{ plugin_id }}"
+        id        = "${ plugin_id }"
         type      = "node"
         mount_dir = "/csi"
       }
