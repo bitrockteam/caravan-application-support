@@ -14,7 +14,7 @@ resource "nomad_job" "csi" {
   jobspec = templatefile(
     each.value,
     {
-      dc_names = var.dc_names
+      dc_names  = var.dc_names
       plugin_id = local.cloud_to_csi_plugin_id[var.cloud]
     }
   )
