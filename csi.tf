@@ -1,5 +1,6 @@
 locals {
-  csi_jobs = { for f in fileset(path.module, "jobs/csi/*_${var.cloud}.hcl") : basename(trimsuffix(f, "_${var.cloud}.hcl")) => f }
+  csi_jobs    = { for f in fileset(path.module, "jobs/csi/*_${var.cloud}.hcl") : basename(trimsuffix(f, "_${var.cloud}.hcl")) => f }
+  csi_enabled = contains(keys(local.cloud_to_csi_plugin_id), var.cloud) ? 1 : 0
 
   gcp_plugin_id = "gcepd"
   aws_plugin_id = "aws-ebs"

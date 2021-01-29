@@ -1,10 +1,5 @@
-// Common
-locals {
-  configure_csi = contains(keys(local.cloud_to_csi_plugin_id), var.cloud) ? 1 : 0
-}
-
 data "nomad_plugin" "csi" {
-  count = local.configure_csi
+  count = local.csi_enabled
   depends_on = [
     nomad_job.csi
   ]
@@ -13,7 +8,7 @@ data "nomad_plugin" "csi" {
 }
 
 resource "nomad_volume" "jenkins_master" {
-  count = local.configure_csi
+  count = local.csi_enabled
   depends_on = [
     nomad_job.csi,
     data.nomad_plugin.csi
