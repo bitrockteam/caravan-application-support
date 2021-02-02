@@ -6,23 +6,12 @@ job "csi_nodes" {
   group "nodes" {
     task "plugin" {
       driver = "docker"
-      template {
-        data = <<EOH
-{{ with secret "secret/gcp/pd_csi_sa_credentials" }}
-{{- .Data.data.credentials_json -}}
-{{ end }}
-EOH
-  destination = "secrets/credentials.json"
-      }
-      env { "GOOGLE_APPLICATION_CREDENTIALS" = "/secrets/credentials.json"
-      }
       config {
-        image = "gcr.io/gke-release/gcp-compute-persistent-disk-csi-driver:v1.0.1-gke.0"
+        image = "amazon/aws-ebs-csi-driver:latest"
         args = [
           "--endpoint=unix:///csi/csi.sock",
-          "--v=6",
-          "--logtostderr",
-          "--run-controller-service=false"
+          "--v=5",
+          "--logtostderr"
         ],
         dns_servers = ["$${attr.unique.network.ip-address}"]
         privileged = true

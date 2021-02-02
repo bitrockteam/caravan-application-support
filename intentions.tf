@@ -1,131 +1,307 @@
-resource "consul_intention" "esm" {
-  source_name      = "consul-esm"
-  destination_name = "*"
-  action           = "allow"
+resource "consul_config_entry" "esm" {
+  name = "*"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "consul-esm"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jaeger-agent" {
-  source_name      = "*"
-  destination_name = "jaeger-agent"
-  action           = "allow"
+resource "consul_config_entry" "jaeger-agent" {
+  name = "jaeger-agent"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "*"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jaeger-collector" {
-  source_name      = "*"
-  destination_name = "jaeger-collector"
-  action           = "allow"
+resource "consul_config_entry" "jaeger-collector" {
+  name = "jaeger-collector"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "*"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_jaeger-query" {
-  source_name      = "ingress-gateway"
-  destination_name = "jaeger-query"
-  action           = "allow"
+resource "consul_config_entry" "ingress_jaeger-query" {
+  name = "jaeger-query"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_kibana" {
-  source_name      = "ingress-gateway"
-  destination_name = "kibana"
-  action           = "allow"
+resource "consul_config_entry" "ingress_kibana" {
+  name = "kibana"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_keycloak" {
-  source_name      = "ingress-gateway"
-  destination_name = "keycloak"
-  action           = "allow"
+resource "consul_config_entry" "ingress_keycloak" {
+  name = "keycloak"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_waypoint" {
-  source_name      = "ingress-gateway"
-  destination_name = "waypoint-server"
-  action           = "allow"
+resource "consul_config_entry" "ingress_waypoint" {
+  name = "waypoint-server"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_grafana" {
-  source_name      = "ingress-gateway"
-  destination_name = "grafana-internal"
-  action           = "allow"
+resource "consul_config_entry" "ingress_grafana" {
+  name = "grafana-internal"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_prometheus" {
-  source_name      = "ingress-gateway"
-  destination_name = "prometheus"
-  action           = "allow"
+resource "consul_config_entry" "ingress_prometheus" {
+  name = "prometheus"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_echo-server" {
-  source_name      = "ingress-gateway"
-  destination_name = "echo-server"
-  action           = "allow"
+resource "consul_config_entry" "ingress_echo-server" {
+  name = "echo-server"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jaeger-query_jaeger-collector" {
-  source_name      = "jaeger-query"
-  destination_name = "jaeger-collector"
-  action           = "allow"
+resource "consul_config_entry" "jaeger-query_jaeger-collector" {
+  name = "jaeger-collector"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "jaeger-query"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jaeger-collector_elastic-internal" {
-  source_name      = "jaeger-collector"
-  destination_name = "elastic-internal"
-  action           = "allow"
+resource "consul_config_entry" "jaeger-collector_elastic-internal" {
+  name = "elastic-internal"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "jaeger-collector"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jaeger-query_elastic-internal" {
-  source_name      = "jaeger-query"
-  destination_name = "elastic-internal"
-  action           = "allow"
+resource "consul_config_entry" "jaeger-query_elastic-internal" {
+  name = "elastic-internal"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "jaeger-query"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "kibana_elastic-internal" {
-  source_name      = "kibana"
-  destination_name = "elastic-internal"
-  action           = "allow"
+resource "consul_config_entry" "kibana_elastic-internal" {
+  name = "elastic-internal"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "kibana"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "echo-server_kibana" {
-  source_name      = "echo-server"
-  destination_name = "kibana"
-  action           = "allow"
+resource "consul_config_entry" "echo-server_kibana" {
+  name = "kibana"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "echo-server"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "opentraced-app-b_pentraced-app" {
-  source_name      = "opentraced-app-b"
-  destination_name = "opentraced-app"
-  action           = "allow"
+resource "consul_config_entry" "opentraced-app-b_pentraced-app" {
+  name = "opentraced-app"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "opentraced-app-b"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "echo-server_opentraced-app" {
-  source_name      = "echo-server"
-  destination_name = "opentraced-app"
-  action           = "allow"
+resource "consul_config_entry" "echo-server_opentraced-app" {
+  name = "opentraced-app"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "echo-server"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_opentraced-app-b" {
-  source_name      = "ingress-gateway"
-  destination_name = "opentraced-app-b"
-  action           = "allow"
+resource "consul_config_entry" "ingress_opentraced-app-b" {
+  name = "opentraced-app-b"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "ingress_jenkins" {
-  source_name      = "ingress-gateway"
-  destination_name = "jenkins"
-  action           = "allow"
+resource "consul_config_entry" "ingress_jenkins" {
+  name = "jenkins"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jenkins_nomad" {
-  source_name      = "jenkins"
-  destination_name = "nomad"
-  action           = "allow"
+resource "consul_config_entry" "jenkins_nomad" {
+  name = "nomad"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "jenkins"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "nomad_jenkins" {
-  source_name      = "nomad"
-  destination_name = "jenkins"
-  action           = "allow"
+resource "consul_config_entry" "nomad_jenkins" {
+  name = "jenkins"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "nomad"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 
-resource "consul_intention" "jenkins_jenkins" {
-  source_name      = "*"
-  destination_name = "jenkins"
-  action           = "allow"
+resource "consul_config_entry" "jenkins_jenkins" {
+  name = "jenkins"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "*"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }

@@ -42,14 +42,16 @@ variable "cloud" {
   type        = string
   default     = ""
   description = "Allow to deploy cloud specific jobs"
+  validation {
+    condition     = contains(toset(["gcp", "aws", ""]), var.cloud)
+    error_message = "Unsupported cloud configured."
+  }
 }
-variable "gcp_project_id" {
+variable "jenkins_volume_external_id" {
+  // GCP example: projects/${var.gcp_project_id}/regions/${var.gcp_region}/disks/jenkins-master
+  // AWS example: vol-abc123abc123
   type    = string
-  default = null
-}
-variable "gcp_region" {
-  type    = string
-  default = null
+  default = ""
 }
 variable "nameserver_dummy_ip" {
   type    = string

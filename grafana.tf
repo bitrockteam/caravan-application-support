@@ -5,13 +5,13 @@ locals {
 }
 
 resource "grafana_dashboard" "dashboard" {
-  depends_on = [ nomad_job.consul-ingress ]
+  depends_on  = [nomad_job.consul-ingress]
   for_each    = local.dashboards
   config_json = file(each.value)
 }
 
 resource "grafana_data_source" "metrics" {
-  depends_on = [ nomad_job.consul-ingress ]
+  depends_on = [nomad_job.consul-ingress]
   count      = var.configure_grafana ? 1 : 0
   type       = "prometheus"
   name       = "Prometheus"

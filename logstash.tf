@@ -9,15 +9,31 @@ resource "nomad_job" "logstash" {
   )
 }
 
-resource "consul_intention" "logstash-tcp" {
-  source_name      = "*"
-  destination_name = "logstash-tcp"
-  action           = "allow"
+resource "consul_config_entry" "logstash-tcp" {
+  name = "logstash-tcp"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "*"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
-resource "consul_intention" "logstash-http" {
-  source_name      = "*"
-  destination_name = "logstash-http"
-  action           = "allow"
+resource "consul_config_entry" "logstash-http" {
+  name = "logstash-http"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "*"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
 }
 resource "consul_config_entry" "logstash-tcp-service-defaults" {
   name = "logstash-tcp"
