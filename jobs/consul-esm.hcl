@@ -5,7 +5,7 @@ job "consul-esm" {
   constraint {
     attribute = "$${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "^defwrkr-"
+    value     = "^worker-"
   }
   group "esm-group" {
     network {

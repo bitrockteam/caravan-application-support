@@ -5,7 +5,7 @@ job "consul-ingress" {
   constraint {
     attribute = "$${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "^defwrkr-"
+    value     = "^worker-"
   }
   group "ingress-group" {
     network {

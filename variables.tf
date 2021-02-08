@@ -67,3 +67,10 @@ variable "configure_grafana" {
   type    = bool
   default = true
 }
+
+variable "configure_monitoring" {
+  type    = bool
+  default = true
+}
+
+

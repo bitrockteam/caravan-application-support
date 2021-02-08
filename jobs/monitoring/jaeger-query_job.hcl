@@ -1,36 +1,24 @@
-job "jaeger-collector" {
+job "jaeger-query" {
     datacenters = [
         %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
     ]
 
     type = "service"
 
-    constraint {
-        attribute = "$${attr.unique.hostname}"
-        operator  = "="
-        value     = "monitoring"
-    }
-
-    group "collector" {
+    group "query" {
         network {
             mode = "host"
             port "http" {
-                static = 14268
+                static = 16686
+                to = 16686
             }
-            port "http_admin" {
-                static = 14269
-            }
-            port "http_span" {
-                static = 14250
-            }
-            port "http_zipkin_span" {
-                static = 9411
-            }
+            port "http_admin" {}
         }
         service {
-            name = "jaeger-collector"
+            name = "jaeger-query"
             tags = [ "monitoring" ]
-            port = "http_span",
+            port = "http"
+            
             check {
                 type = "http"
                 port = "http_admin"
@@ -38,9 +26,10 @@ job "jaeger-collector" {
                 interval = "5s"
                 timeout = "2s"
             }
+
         }
 
-        task "collector" {
+        task "jaeger-query" {
             driver = "exec"
 
             template {
@@ -49,17 +38,18 @@ job "jaeger-collector" {
             }
 
             config {
-                command = "/usr/local/bin/jaeger-collector"
+                command = "/usr/local/bin/jaeger-query"
                 args = [
                     "--admin.http.host-port=0.0.0.0:$${NOMAD_PORT_http_admin}",
-                    "--collector.grpc-server.host-port=0.0.0.0:$${NOMAD_PORT_http_span}",
-                    "--collector.zipkin.http-port=$${NOMAD_PORT_http_zipkin_span}"
+                    "--query.host-port=0.0.0.0:$${NOMAD_PORT_http}"
                 ]
             }
 
             env {
                 SPAN_STORAGE_TYPE = "elasticsearch"
                 ES_SERVER_URLS = "http://elastic-internal.${services_domain}:9200"
+                JAEGER_AGENT_HOST = "jaeger-agent.${services_domain}"
+                JAEGER_AGENT_PORT = "6831"
             }
         }
     }

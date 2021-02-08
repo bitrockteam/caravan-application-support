@@ -5,7 +5,7 @@ job "consul-terminating" {
   constraint {
     attribute = "$${attr.unique.hostname}"
     operator  = "regexp"
-    value     = "^defwrkr-"
+    value     = "^worker-"
   }
   group "terminating-group" {
     network {

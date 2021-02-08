@@ -1,9 +1,25 @@
 locals {
-  jobs = { for f in fileset(path.module, "jobs/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f }
+  monitoring_jobs = var.configure_monitoring ? { for f in fileset(path.module, "jobs/monitoring/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f } : {}
+  workload_jobs = { for f in fileset(path.module, "jobs/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f }
 }
 
-resource "nomad_job" "app" {
-  for_each = local.jobs
+resource "nomad_job" "monitoring" {
+  for_each = local.monitoring_jobs
+  jobspec = templatefile(
+    each.value,
+    {
+      dc_names                = var.dc_names
+      services_domain         = var.services_domain
+      artifacts_source_prefix = var.artifacts_source_prefix
+      container_registry      = var.container_registry
+      domain                  = var.domain
+      nameserver_dummy_ip     = var.nameserver_dummy_ip
+    }
+  )
+}
+
+resource "nomad_job" "workloads" {
+  for_each = local.workload_jobs
   jobspec = templatefile(
     each.value,
     {

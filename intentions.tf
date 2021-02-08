@@ -124,20 +124,6 @@ resource "consul_config_entry" "ingress_prometheus" {
   })
 }
 
-resource "consul_config_entry" "ingress_echo-server" {
-  name = "echo-server"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "ingress-gateway"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
 resource "consul_config_entry" "jaeger-query_jaeger-collector" {
   name = "jaeger-collector"
   kind = "service-intentions"
@@ -188,20 +174,6 @@ resource "consul_config_entry" "kibana_elastic-internal" {
     Sources = [{
       Action     = "allow"
       Name       = "kibana"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "echo-server_kibana" {
-  name = "kibana"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "echo-server"
       Precedence = 9
       Type       = "consul"
     }]
