@@ -14,6 +14,7 @@ resource "nomad_job" "monitoring" {
       container_registry      = var.container_registry
       domain                  = var.domain
       nameserver_dummy_ip     = var.nameserver_dummy_ip
+      logstash_index_prefix = var.logstash_index_prefix
     }
   )
 }
