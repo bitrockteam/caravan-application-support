@@ -19,6 +19,16 @@ resource "nomad_job" "monitoring" {
   )
 }
 
+resource "nomad_job" "openfaas" {
+  count = var.configure_openfaas ? 1 : 0
+  jobspec = templatefile(
+    "jobs/openfaas/faasd_bundle_job.hcl",
+    {
+      dc_names                = var.dc_names
+    }
+  )
+}
+
 resource "nomad_job" "workloads" {
   for_each = local.workload_jobs
   jobspec = templatefile(

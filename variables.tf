@@ -73,4 +73,9 @@ variable "configure_monitoring" {
   default = true
 }
 
+variable "configure_openfaas" {
+  type    = bool
+  default = true
+}
+
 
