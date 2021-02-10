@@ -24,6 +24,9 @@ resource "consul_config_entry" "terminating_gateway" {
       },
       {
         Name = "jenkins"
+      },
+      {
+        Name = "faasd-gateway"
       }
     ]
   })

@@ -6,8 +6,8 @@ job "jaeger-agent" {
     type = "system"
 
     constraint {
-        attribute = "$${attr.unique.hostname}"
-        operator  = "!="
+        attribute = "$${meta.nodeType}"
+        operator  = "="
         value     = "monitoring"
     }
 

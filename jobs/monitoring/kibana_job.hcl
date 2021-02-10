@@ -6,7 +6,7 @@ job "kibana" {
     type = "service"
 
     constraint {
-        attribute = "$${attr.unique.hostname}"
+        attribute = "$${meta.nodeType}"
         operator  = "="
         value     = "monitoring"
     }

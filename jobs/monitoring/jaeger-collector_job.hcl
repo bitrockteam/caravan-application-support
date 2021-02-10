@@ -4,6 +4,12 @@ job "jaeger-collector" {
     ]
 
     type = "service"
+
+    constraint {
+        attribute = "$${meta.nodeType}"
+        operator  = "="
+        value     = "monitoring"
+    }
     
     group "collector" {
         network {

@@ -5,6 +5,12 @@ job "jaeger-query" {
 
     type = "service"
 
+    constraint {
+        attribute = "$${meta.nodeType}"
+        operator  = "="
+        value     = "monitoring"
+    }
+
     group "query" {
         network {
             mode = "host"

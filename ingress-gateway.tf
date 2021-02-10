@@ -53,10 +53,10 @@ resource "consul_config_entry" "ingress_gateway" {
           ]
         },
         {
-          Name = "echo-server"
+          Name = "faasd-gateway"
           Hosts = [
-            "echo.${var.domain}",
-            "echo.${var.domain}:8080",
+            "faasd-gateway.${var.domain}",
+            "faasd-gateway.${var.domain}:8080",
           ]
         },
         {

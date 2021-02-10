@@ -11,7 +11,7 @@ job "jaeger-deps" {
     }
 
     constraint {
-        attribute = "$${attr.unique.hostname}"
+        attribute = "$${meta.nodeType}"
         operator  = "="
         value     = "monitoring"
     }

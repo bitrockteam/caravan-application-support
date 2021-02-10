@@ -194,20 +194,6 @@ resource "consul_config_entry" "opentraced-app-b_pentraced-app" {
   })
 }
 
-resource "consul_config_entry" "echo-server_opentraced-app" {
-  name = "opentraced-app"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "echo-server"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
 resource "consul_config_entry" "ingress_opentraced-app-b" {
   name = "opentraced-app-b"
   kind = "service-intentions"
@@ -277,3 +263,46 @@ resource "consul_config_entry" "jenkins_jenkins" {
     }]
   })
 }
+
+resource "consul_config_entry" "gateway_nats" {
+  name = "faasd-nats"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "faasd-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
+}
+
+resource "consul_config_entry" "faasd_provider" {
+  name = "*"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "faasd-nats"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
+}
+
+resource "consul_config_entry" "faasd_gateway" {
+  name = "faasd-gateway"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "ingress-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
+}
+

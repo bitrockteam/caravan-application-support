@@ -3,9 +3,9 @@ job "consul-terminating" {
     %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
   ]
   constraint {
-    attribute = "$${attr.unique.hostname}"
-    operator  = "regexp"
-    value     = "^worker-"
+    attribute = "$${meta.nodeType}"
+    operator  = "="
+    value     = "worker"
   }
   group "terminating-group" {
     network {
