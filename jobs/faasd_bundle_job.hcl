@@ -3,6 +3,12 @@ job "faasd_bundle" {
     %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
   ]
   
+  constraint {
+    attribute = "$${meta.nodeType}"
+    operator  = "="
+    value     = "worker"
+  }
+
   type        = "service"
  
   group "faasd" {
@@ -25,6 +31,10 @@ job "faasd_bundle" {
       port "gateway_http" {
         static = 22222
         to = 8080
+      }
+      port "gateway_mon" {
+        static = 22223
+        to = 8082
       }
       dns {
         servers = ["192.168.0.1"]
@@ -63,13 +73,26 @@ job "faasd_bundle" {
         tags = [ "serverless" ]
         port = "gateway_http"
 
-        # check {
-        #     type = "http"
-        #     path = "/"
-        #     port = "gateway_http"
-        #     interval = "5s"
-        #     timeout = "2s"
-        # }
+        check {
+            type = "tcp"
+            port = "gateway_http"
+            interval = "5s"
+            timeout = "2s"
+        }
+    }
+
+    service {
+        name = "faasd-mon"
+        tags = [ "serverless" ]
+        port = "gateway_mon"
+
+        check {
+            type = "http"
+            path = "/metrics"
+            port = "gateway_mon"
+            interval = "30s"
+            timeout = "2s"
+        }
     }
 
     service {
@@ -161,7 +184,7 @@ job "faasd_bundle" {
       driver = "docker"
       config {
         image = "ghcr.io/openfaas/gateway:0.20.7"
-        ports = ["gateway_http"]
+        ports = ["gateway_http", "gateway_mon"]
         cap_add = [
           "CAP_NET_RAW",
         ]
@@ -183,6 +206,7 @@ job "faasd_bundle" {
         upstream_timeout="65s"
         faas_nats_address="faasd-nats.service.consul"
         faas_nats_port="$${NOMAD_PORT_nats_tcp}"
+        faas_prometheus_host="prometheus.service.consul"
         auth_proxy_url="http://faasd-basic-auth.service.consul:$${NOMAD_PORT_auth_http}/validate"
         auth_proxy_pass_body="false"
         secret_mount_path="/secrets"

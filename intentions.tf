@@ -306,3 +306,17 @@ resource "consul_config_entry" "faasd_gateway" {
   })
 }
 
+resource "consul_config_entry" "faasd_gateway_prom" {
+  name = "prometheus"
+  kind = "service-intentions"
+
+  config_json = jsonencode({
+    Sources = [{
+      Action     = "allow"
+      Name       = "faasd-gateway"
+      Precedence = 9
+      Type       = "consul"
+    }]
+  })
+}
+
