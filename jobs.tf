@@ -1,6 +1,6 @@
 locals {
   monitoring_jobs = var.configure_monitoring ? { for f in fileset(path.module, "jobs/monitoring/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f } : {}
-  workload_jobs = { for f in fileset(path.module, "jobs/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f }
+  workload_jobs   = { for f in fileset(path.module, "jobs/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f }
 }
 
 resource "nomad_job" "monitoring" {
@@ -14,7 +14,7 @@ resource "nomad_job" "monitoring" {
       container_registry      = var.container_registry
       domain                  = var.domain
       nameserver_dummy_ip     = var.nameserver_dummy_ip
-      logstash_index_prefix = var.logstash_index_prefix
+      logstash_index_prefix   = var.logstash_index_prefix
     }
   )
 }
@@ -24,7 +24,7 @@ resource "nomad_job" "openfaas" {
   jobspec = templatefile(
     "jobs/openfaas/faasd_bundle_job.hcl",
     {
-      dc_names                = var.dc_names
+      dc_names = var.dc_names
     }
   )
 }

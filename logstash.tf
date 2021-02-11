@@ -12,8 +12,8 @@ resource "nomad_job" "logstash" {
 
 resource "consul_config_entry" "logstash-tcp" {
   count = var.configure_monitoring ? 1 : 0
-  name = "logstash-tcp"
-  kind = "service-intentions"
+  name  = "logstash-tcp"
+  kind  = "service-intentions"
 
   config_json = jsonencode({
     Sources = [{
@@ -26,8 +26,8 @@ resource "consul_config_entry" "logstash-tcp" {
 }
 resource "consul_config_entry" "logstash-http" {
   count = var.configure_monitoring ? 1 : 0
-  name = "logstash-http"
-  kind = "service-intentions"
+  name  = "logstash-http"
+  kind  = "service-intentions"
 
   config_json = jsonencode({
     Sources = [{
@@ -40,8 +40,8 @@ resource "consul_config_entry" "logstash-http" {
 }
 resource "consul_config_entry" "logstash-tcp-service-defaults" {
   count = var.configure_monitoring ? 1 : 0
-  name = "logstash-tcp"
-  kind = "service-defaults"
+  name  = "logstash-tcp"
+  kind  = "service-defaults"
 
   config_json = jsonencode({
     Protocol = "tcp"
