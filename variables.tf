@@ -43,7 +43,7 @@ variable "cloud" {
   default     = ""
   description = "Allow to deploy cloud specific jobs"
   validation {
-    condition     = contains(toset(["gcp", "aws", ""]), var.cloud)
+    condition     = contains(toset(["gcp", "aws", "azure", ""]), var.cloud)
     error_message = "Unsupported cloud configured."
   }
 }
@@ -97,4 +97,19 @@ variable "monitoring_jobs_constraint" {
     value     = "monitoring"
   }]
   description = "List of constraints to be applied to jobs running in monitoring node. Escape $ with double $."
+}
+
+variable "azure_cloud_environment" {
+  type    = string
+  default = "AzurePublicCloud"
+}
+
+variable "azure_tenant_id" {
+  type    = string
+  default = ""
+}
+
+variable "azure_subscription_id" {
+  type    = string
+  default = ""
 }
