@@ -5,12 +5,14 @@ job "jaeger-collector" {
 
     type = "service"
 
+    %{ for constraint in monitoring_jobs_constraint ~}
     constraint {
-        attribute = "$${meta.nodeType}"
-        operator  = "="
-        value     = "monitoring"
+        %{ for key, value in constraint ~}
+        "${key}" = "${value}"
+        %{ endfor ~}
     }
-    
+    %{ endfor ~}
+
     group "collector" {
         network {
             mode = "host"

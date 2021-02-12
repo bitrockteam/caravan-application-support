@@ -10,11 +10,13 @@ job "jaeger-deps" {
         prohibit_overlap = true
     }
 
+    %{ for constraint in monitoring_jobs_constraint ~}
     constraint {
-        attribute = "$${meta.nodeType}"
-        operator  = "="
-        value     = "monitoring"
+        %{ for key, value in constraint ~}
+        "${key}" = "${value}"
+        %{ endfor ~}
     }
+    %{ endfor ~}
 
     group "batch" {
 

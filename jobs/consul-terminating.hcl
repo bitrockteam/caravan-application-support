@@ -2,11 +2,13 @@ job "consul-terminating" {
   datacenters = [
     %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
   ]
+  %{ for constraint in worker_jobs_constraint ~}
   constraint {
-    attribute = "$${meta.nodeType}"
-    operator  = "="
-    value     = "worker"
+    %{ for key, value in constraint ~}
+    "${key}" = "${value}"
+    %{ endfor ~}
   }
+  %{ endfor ~}
   group "terminating-group" {
     network {
       mode = "host"
