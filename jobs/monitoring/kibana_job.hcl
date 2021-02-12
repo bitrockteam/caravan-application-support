@@ -5,11 +5,13 @@ job "kibana" {
 
     type = "service"
 
+    %{ for constraint in monitoring_jobs_constraint ~}
     constraint {
-        %{ for key, value in monitoring_jobs_constraint ~}
+        %{ for key, value in constraint ~}
         "${key}" = "${value}"
         %{ endfor ~}
     }
+    %{ endfor ~}
 
     group "kibana-group" {
         network {

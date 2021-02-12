@@ -80,19 +80,21 @@ variable "configure_openfaas" {
 
 
 variable "worker_jobs_constraint" {
-  type = map(string)
-  default = {
-    attribute = "$${meta.nodeType}"
-    operator  = "="
-    value     = "worker"
-  }
+  type        = list(map(string))
+  default     = [{
+attribute = "$${meta.nodeType}"
+operator  = "="
+value     = "worker"
+}]
+  description = "List of constraints to be applied to jobs running in workers. Escape $ with double $."
 }
 
 variable "monitoring_jobs_constraint" {
-  type = map(string)
-  default = {
-    attribute = "$${meta.nodeType}"
-    operator  = "="
-    value     = "monitoring"
-  }
+  type        = list(map(string))
+  default     = [{
+attribute = "$${meta.nodeType}"
+operator  = "="
+value     = "monitoring"
+}]
+  description = "List of constraints to be applied to jobs running in monitoring node. Escape $ with double $."
 }
