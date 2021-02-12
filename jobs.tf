@@ -40,6 +40,8 @@ resource "nomad_job" "workloads" {
       container_registry      = var.container_registry
       domain                  = var.domain
       nameserver_dummy_ip     = var.nameserver_dummy_ip
+      monitoring_jobs_constraint = var.monitoring_jobs_constraint
+      worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
 }
@@ -50,6 +52,7 @@ resource "nomad_job" "consul-ingress" {
     {
       dc_names        = var.dc_names
       services_domain = var.services_domain
+      worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
 }
@@ -60,6 +63,7 @@ resource "nomad_job" "consul-terminating" {
     {
       dc_names        = var.dc_names
       services_domain = var.services_domain
+      worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
 }
@@ -70,6 +74,7 @@ resource "nomad_job" "consul-esm" {
     {
       dc_names        = var.dc_names
       services_domain = var.services_domain
+      worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
 }

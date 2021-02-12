@@ -6,9 +6,9 @@ job "kibana" {
     type = "service"
 
     constraint {
-        attribute = "$${meta.nodeType}"
-        operator  = "="
-        value     = "monitoring"
+        %{ for key, value in monitoring_jobs_constraint ~}
+        "${key}" = "${value}"
+        %{ endfor ~}
     }
 
     group "kibana-group" {

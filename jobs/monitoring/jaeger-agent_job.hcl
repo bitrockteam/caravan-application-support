@@ -5,11 +5,11 @@ job "jaeger-agent" {
 
     type = "system"
 
-    constraint {
-        attribute = "$${meta.nodeType}"
-        operator  = "="
-        value     = "monitoring"
-    }
+  constraint {
+    %{ for key, value in monitoring_jobs_constraint ~}
+    "${key}" = "${value}"
+    %{ endfor ~}
+  }
 
     group "agent" {
 

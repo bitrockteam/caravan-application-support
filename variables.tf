@@ -79,3 +79,20 @@ variable "configure_openfaas" {
 }
 
 
+variable "worker_jobs_constraint" {
+  type = map(string)
+  default = {
+    attribute = "$${meta.nodeType}"
+    operator  = "="
+    value     = "worker"
+  }
+}
+
+variable "monitoring_jobs_constraint" {
+  type = map(string)
+  default = {
+    attribute = "$${meta.nodeType}"
+    operator  = "="
+    value     = "monitoring"
+  }
+}

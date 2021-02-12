@@ -3,9 +3,9 @@ job "consul-ingress" {
     %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
   ]
   constraint {
-    attribute = "$${meta.nodeType}"
-    operator  = "="
-    value     = "worker"
+    %{ for key, value in worker_jobs_constraint ~}
+    "${key}" = "${value}"
+    %{ endfor ~}
   }
   group "ingress-group" {
     network {
