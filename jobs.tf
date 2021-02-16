@@ -8,13 +8,14 @@ resource "nomad_job" "monitoring" {
   jobspec = templatefile(
     each.value,
     {
-      dc_names                = var.dc_names
-      services_domain         = var.services_domain
-      artifacts_source_prefix = var.artifacts_source_prefix
-      container_registry      = var.container_registry
-      domain                  = var.domain
-      nameserver_dummy_ip     = var.nameserver_dummy_ip
-      logstash_index_prefix   = var.logstash_index_prefix
+      dc_names                   = var.dc_names
+      services_domain            = var.services_domain
+      artifacts_source_prefix    = var.artifacts_source_prefix
+      container_registry         = var.container_registry
+      domain                     = var.domain
+      nameserver_dummy_ip        = var.nameserver_dummy_ip
+      logstash_index_prefix      = var.logstash_index_prefix
+      monitoring_jobs_constraint = var.monitoring_jobs_constraint
     }
   )
 }

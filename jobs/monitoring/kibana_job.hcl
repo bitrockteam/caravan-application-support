@@ -66,7 +66,7 @@ job "kibana" {
             driver = "docker"
 
             config {
-                image = "docker.elastic.co/kibana/kibana:7.9.1"
+                image = "docker.elastic.co/kibana/kibana:7.10.1"
             }
 
             env {
@@ -76,6 +76,7 @@ job "kibana" {
                 TELEMETRY_ENABLED = "false"
                 MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED = "false"
                 STATUS.ALLOWANONYMOUS = "true"
+                XPACK_SECURITY_ENABLED = "false"
             }
 
             resources {
