@@ -6,12 +6,12 @@ resource "consul_config_entry" "star" {
     Sources = [{
       Action     = "allow"
       Name       = "consul-esm"
-      Precedence = 9
+      Precedence = 6
       Type       = "consul"
       }, {
       Action     = "allow"
       Name       = "faasd-nats"
-      Precedence = 9
+      Precedence = 6
       Type       = "consul"
     }]
   })
@@ -25,7 +25,7 @@ resource "consul_config_entry" "jaeger_agent" {
     Sources = [{
       Action     = "allow"
       Name       = "*"
-      Precedence = 9
+      Precedence = 8
       Type       = "consul"
     }]
   })
@@ -39,7 +39,7 @@ resource "consul_config_entry" "jaeger_collector" {
     Sources = [{
       Action     = "allow"
       Name       = "*"
-      Precedence = 9
+      Precedence = 8
       Type       = "consul"
     }]
   })
