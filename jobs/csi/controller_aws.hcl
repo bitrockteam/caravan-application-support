@@ -7,12 +7,12 @@ job "csi_controller" {
     task "plugin" {
       driver = "docker"
        config {
-         image = "amazon/aws-ebs-csi-driver:latest"
+         image = "amazon/aws-ebs-csi-driver:v0.9.0"
          args = [
+            "controller",
             "--endpoint=unix:///csi/csi.sock",
             "--v=5",
             "--logtostderr",
-            "--run-node-service=false"
          ],
          dns_servers = ["$${attr.unique.network.ip-address}"]
       }

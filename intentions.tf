@@ -1,4 +1,4 @@
-resource "consul_config_entry" "esm" {
+resource "consul_config_entry" "star" {
   name = "*"
   kind = "service-intentions"
 
@@ -8,11 +8,16 @@ resource "consul_config_entry" "esm" {
       Name       = "consul-esm"
       Precedence = 9
       Type       = "consul"
+      }, {
+      Action     = "allow"
+      Name       = "faasd-nats"
+      Precedence = 9
+      Type       = "consul"
     }]
   })
 }
 
-resource "consul_config_entry" "jaeger-agent" {
+resource "consul_config_entry" "jaeger_agent" {
   name = "jaeger-agent"
   kind = "service-intentions"
 
@@ -26,7 +31,7 @@ resource "consul_config_entry" "jaeger-agent" {
   })
 }
 
-resource "consul_config_entry" "jaeger-collector" {
+resource "consul_config_entry" "jaeger_collector" {
   name = "jaeger-collector"
   kind = "service-intentions"
 
@@ -40,7 +45,7 @@ resource "consul_config_entry" "jaeger-collector" {
   })
 }
 
-resource "consul_config_entry" "ingress_jaeger-query" {
+resource "consul_config_entry" "jaeger_query" {
   name = "jaeger-query"
   kind = "service-intentions"
 
@@ -54,7 +59,7 @@ resource "consul_config_entry" "ingress_jaeger-query" {
   })
 }
 
-resource "consul_config_entry" "ingress_kibana" {
+resource "consul_config_entry" "kibana" {
   name = "kibana"
   kind = "service-intentions"
 
@@ -68,7 +73,7 @@ resource "consul_config_entry" "ingress_kibana" {
   })
 }
 
-resource "consul_config_entry" "ingress_keycloak" {
+resource "consul_config_entry" "keycloak" {
   name = "keycloak"
   kind = "service-intentions"
 
@@ -82,7 +87,7 @@ resource "consul_config_entry" "ingress_keycloak" {
   })
 }
 
-resource "consul_config_entry" "ingress_waypoint" {
+resource "consul_config_entry" "waypoint_server" {
   name = "waypoint-server"
   kind = "service-intentions"
 
@@ -96,7 +101,7 @@ resource "consul_config_entry" "ingress_waypoint" {
   })
 }
 
-resource "consul_config_entry" "ingress_grafana" {
+resource "consul_config_entry" "grafana_internal" {
   name = "grafana-internal"
   kind = "service-intentions"
 
@@ -110,7 +115,7 @@ resource "consul_config_entry" "ingress_grafana" {
   })
 }
 
-resource "consul_config_entry" "ingress_prometheus" {
+resource "consul_config_entry" "prometheus" {
   name = "prometheus"
   kind = "service-intentions"
 
@@ -120,25 +125,16 @@ resource "consul_config_entry" "ingress_prometheus" {
       Name       = "ingress-gateway"
       Precedence = 9
       Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "jaeger-query_jaeger-collector" {
-  name = "jaeger-collector"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
+      }, {
       Action     = "allow"
-      Name       = "jaeger-query"
+      Name       = "faasd-gateway"
       Precedence = 9
       Type       = "consul"
     }]
   })
 }
 
-resource "consul_config_entry" "jaeger-collector_elastic-internal" {
+resource "consul_config_entry" "elastic_internal" {
   name = "elastic-internal"
   kind = "service-intentions"
 
@@ -148,39 +144,26 @@ resource "consul_config_entry" "jaeger-collector_elastic-internal" {
       Name       = "jaeger-collector"
       Precedence = 9
       Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "jaeger-query_elastic-internal" {
-  name = "elastic-internal"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
+      }, {
       Action     = "allow"
       Name       = "jaeger-query"
       Precedence = 9
       Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "kibana_elastic-internal" {
-  name = "elastic-internal"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
+      }, {
       Action     = "allow"
       Name       = "kibana"
+      Precedence = 9
+      Type       = "consul"
+      }, {
+      Action     = "allow"
+      Name       = "ingress-gateway"
       Precedence = 9
       Type       = "consul"
     }]
   })
 }
 
-resource "consul_config_entry" "opentraced-app-b_pentraced-app" {
+resource "consul_config_entry" "opentraced_app" {
   name = "opentraced-app"
   kind = "service-intentions"
 
@@ -194,7 +177,7 @@ resource "consul_config_entry" "opentraced-app-b_pentraced-app" {
   })
 }
 
-resource "consul_config_entry" "ingress_opentraced-app-b" {
+resource "consul_config_entry" "opentraced_app_b" {
   name = "opentraced-app-b"
   kind = "service-intentions"
 
@@ -208,7 +191,7 @@ resource "consul_config_entry" "ingress_opentraced-app-b" {
   })
 }
 
-resource "consul_config_entry" "ingress_jenkins" {
+resource "consul_config_entry" "jenkins" {
   name = "jenkins"
   kind = "service-intentions"
 
@@ -218,53 +201,22 @@ resource "consul_config_entry" "ingress_jenkins" {
       Name       = "ingress-gateway"
       Precedence = 9
       Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "jenkins_nomad" {
-  name = "nomad"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
+      }, {
       Action     = "allow"
       Name       = "jenkins"
       Precedence = 9
       Type       = "consul"
+      },
+      {
+        Action     = "allow"
+        Name       = "nomad"
+        Precedence = 9
+        Type       = "consul"
     }]
   })
 }
 
-resource "consul_config_entry" "nomad_jenkins" {
-  name = "jenkins"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "nomad"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "jenkins_jenkins" {
-  name = "jenkins"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "*"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "gateway_nats" {
+resource "consul_config_entry" "faasd_nats" {
   name = "faasd-nats"
   kind = "service-intentions"
 
@@ -272,20 +224,6 @@ resource "consul_config_entry" "gateway_nats" {
     Sources = [{
       Action     = "allow"
       Name       = "faasd-gateway"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
-resource "consul_config_entry" "faasd_provider" {
-  name = "*"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "faasd-nats"
       Precedence = 9
       Type       = "consul"
     }]
@@ -305,18 +243,3 @@ resource "consul_config_entry" "faasd_gateway" {
     }]
   })
 }
-
-resource "consul_config_entry" "faasd_gateway_prom" {
-  name = "prometheus"
-  kind = "service-intentions"
-
-  config_json = jsonencode({
-    Sources = [{
-      Action     = "allow"
-      Name       = "faasd-gateway"
-      Precedence = 9
-      Type       = "consul"
-    }]
-  })
-}
-
