@@ -19,7 +19,7 @@ resource "consul_config_entry" "logstash-tcp" {
     Sources = [{
       Action     = "allow"
       Name       = "*"
-      Precedence = 9
+      Precedence = 8
       Type       = "consul"
     }]
   })
@@ -33,7 +33,7 @@ resource "consul_config_entry" "logstash-http" {
     Sources = [{
       Action     = "allow"
       Name       = "*"
-      Precedence = 9
+      Precedence = 8
       Type       = "consul"
     }]
   })
