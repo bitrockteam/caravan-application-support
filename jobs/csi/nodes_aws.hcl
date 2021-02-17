@@ -7,8 +7,9 @@ job "csi_nodes" {
     task "plugin" {
       driver = "docker"
       config {
-        image = "amazon/aws-ebs-csi-driver:latest"
+        image = "amazon/aws-ebs-csi-driver:v0.9.0"
         args = [
+          "node",
           "--endpoint=unix:///csi/csi.sock",
           "--v=5",
           "--logtostderr"
