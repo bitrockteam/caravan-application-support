@@ -19,7 +19,7 @@ job "csi_controller" {
 "aadClientId": "{{ .Data.client_id }}",
 "aadClientSecret": "{{ .Data.client_secret }}",
 "resourceGroup": "$${attr.platform.azure.resource-group}",
-"location": "$${{attr.platform.azure.location}}"
+"location": "$${attr.platform.azure.location}"
 }
 {{ end }}
 EOH
