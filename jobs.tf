@@ -52,7 +52,9 @@ resource "nomad_job" "consul-ingress" {
     "${path.module}/jobs/consul-ingress.hcl",
     {
       dc_names               = var.dc_names
-      services_domain        = var.services_domain
+      domain                 = var.domain
+      ingress_services       = var.ingress_services
+      nameserver_dummy_ip    = var.nameserver_dummy_ip
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
@@ -64,6 +66,8 @@ resource "nomad_job" "consul-terminating" {
     {
       dc_names               = var.dc_names
       services_domain        = var.services_domain
+      terminating_services   = var.terminating_services
+      nameserver_dummy_ip    = var.nameserver_dummy_ip
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )

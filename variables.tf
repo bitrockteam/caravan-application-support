@@ -7,6 +7,87 @@ variable "domain" {
 variable "services_domain" {
   type = string
 }
+
+variable "ingress_services" {
+  type = list(map(string))
+  default = [
+    {
+      name = "jaeger-query"
+      host = "jaeger"
+    },
+    {
+      name = "grafana-internal"
+      host = "grafana"
+    },
+    {
+      name = "kibana"
+      host = "kibana"
+    },
+    {
+      name = "keycloak"
+      host = "keycloak"
+    },
+    {
+      name = "jenkins"
+      host = "jenkins"
+    },
+    {
+      name = "prometheus"
+      host = "prometheus"
+    },
+    {
+      name = "faasd-gateway"
+      host = "faasd-gateway"
+    },
+    {
+      name = "waypoint-server"
+      host = "waypoint"
+    },
+    {
+      name = "waypoint-grpc"
+      host = "waypoint-grpc"
+    }
+  ]
+}
+
+variable "terminating_services" {
+  type = list(map(string))
+  default = [
+    {
+      name = "logstash-tcp"
+    },
+    {
+      name = "logstash-http"
+    },
+    {
+      name = "jaeger-query"
+    },
+    {
+      name = "grafana-internal"
+    },
+    {
+      name = "elastic-internal"
+    },
+    {
+      name = "prometheus"
+    },
+    {
+      name = "jenkins"
+    },
+    {
+      name = "faasd-gateway"
+    },
+    {
+      name    = "waypoint-server"
+      ca_file = "/etc/consul.d/ca"
+    },
+    {
+      name    = "waypoint-grpc"
+      ca_file = "/etc/consul.d/ca"
+    }
+  ]
+}
+
 variable "container_registry" {
   type    = string
   default = "us.gcr.io/hcpoc-terraform-admin"

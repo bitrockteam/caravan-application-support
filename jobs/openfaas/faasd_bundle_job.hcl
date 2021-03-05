@@ -183,7 +183,7 @@ job "faasd_bundle" {
     task "gateway" {
       driver = "docker"
       config {
-        image = "ghcr.io/openfaas/gateway:0.20.7"
+        image = "ghcr.io/openfaas/gateway:0.20.8"
         ports = ["gateway_http", "gateway_mon"]
         cap_add = [
           "CAP_NET_RAW",
@@ -201,9 +201,9 @@ job "faasd_bundle" {
         basic_auth="true"
         functions_provider_url="http://faasd-provider.service.consul:$${NOMAD_PORT_faasd_http}/"
         direct_functions="false"
-        read_timeout="60s"
-        write_timeout="60s"
-        upstream_timeout="65s"
+        read_timeout="65s"
+        write_timeout="65s"
+        upstream_timeout="60s"
         faas_nats_address="faasd-nats.service.consul"
         faas_nats_port="$${NOMAD_PORT_nats_tcp}"
         faas_prometheus_host="prometheus.service.consul"
@@ -215,7 +215,7 @@ job "faasd_bundle" {
       }
       resources {
         cpu    = 200
-        memory = 500
+        memory = 128
       }
     }
 
@@ -249,7 +249,7 @@ job "faasd_bundle" {
       }
       resources {
         cpu    = 200
-        memory = 500
+        memory = 128
       }
     }
   }

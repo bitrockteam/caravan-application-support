@@ -16,10 +16,6 @@ job "kibana" {
     group "kibana-group" {
         network {
             mode = "bridge"
-            port "http" {
-                static = 5601
-                to = 5601
-            }
             port "http_envoy_prom" {
               to = "9102"
             }
@@ -31,17 +27,20 @@ job "kibana" {
         service {
             name = "kibana"
             tags = [ "monitoring" ]
-            port = "http",
+            port = 5601,
+            meta {
+              envoy_metrics_port = "$${NOMAD_HOST_PORT_http_envoy_prom}"
+            }
             check {
+                expose = true
+                name = "kibana-health"
                 type = "http"
-                port = "http"
                 path = "/api/status"
                 interval = "5s"
                 timeout = "2s"
             }
             connect {
                 sidecar_service {
-                    port = "http"
                     proxy {
                         upstreams {
                             destination_name = "elastic-internal"
@@ -53,15 +52,6 @@ job "kibana" {
 
         }
 
-        service {
-          name = "kibana"
-          port = "http_envoy_prom"
-
-          tags = [
-            "envoy", "prometheus"
-          ]
-        }
-
         task "kibana" {
             driver = "docker"
 
@@ -71,7 +61,6 @@ job "kibana" {
 
             env {
                 SERVER_NAME = "kibana.${domain}"
-                SERVER_PORT = "$${NOMAD_PORT_http}"
                 ELASTICSEARCH_HOSTS = "http://localhost:9200"
                 TELEMETRY_ENABLED = "false"
                 MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED = "false"
