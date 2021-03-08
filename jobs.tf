@@ -27,7 +27,6 @@ module "kibana" {
   services_domain         = var.services_domain
   elastic_service_name    = "elastic-internal"
   kibana_jobs_constraints = var.monitoring_jobs_constraint
-  nomad_endpoint          = var.nomad_endpoint
 }
 
 resource "nomad_job" "workloads" {
