@@ -24,28 +24,8 @@ variable "ingress_services" {
       host = "kibana"
     },
     {
-      name = "keycloak"
-      host = "keycloak"
-    },
-    {
-      name = "jenkins"
-      host = "jenkins"
-    },
-    {
       name = "prometheus"
       host = "prometheus"
-    },
-    {
-      name = "faasd-gateway"
-      host = "faasd-gateway"
-    },
-    {
-      name = "waypoint-server"
-      host = "waypoint"
-    },
-    {
-      name = "waypoint-grpc"
-      host = "waypoint-grpc"
     }
   ]
 }
@@ -70,27 +50,13 @@ variable "terminating_services" {
     },
     {
       name = "prometheus"
-    },
-    {
-      name = "jenkins"
-    },
-    {
-      name = "faasd-gateway"
-    },
-    {
-      name    = "waypoint-server"
-      ca_file = "/etc/consul.d/ca"
-    },
-    {
-      name    = "waypoint-grpc"
-      ca_file = "/etc/consul.d/ca"
     }
   ]
 }
 
 variable "container_registry" {
   type    = string
-  default = "us.gcr.io/hcpoc-terraform-admin"
+  default = "docker.io"
 }
 variable "artifacts_source_prefix" {
   type = string
