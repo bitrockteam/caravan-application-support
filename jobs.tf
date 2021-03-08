@@ -20,6 +20,16 @@ resource "nomad_job" "monitoring" {
   )
 }
 
+module "kibana" {
+  source                  = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main"
+  dc_names                = var.dc_names
+  nameserver_dummy_ip     = var.nameserver_dummy_ip
+  services_domain         = var.services_domain
+  elastic_service_name    = "elastic-internal"
+  kibana_jobs_constraints = var.monitoring_jobs_constraint
+  nomad_endpoint          = var.nomad_endpoint
+}
+
 resource "nomad_job" "workloads" {
   for_each = local.workload_jobs
   jobspec = templatefile(
@@ -42,7 +52,9 @@ resource "nomad_job" "consul-ingress" {
     "${path.module}/jobs/consul-ingress.hcl",
     {
       dc_names               = var.dc_names
-      services_domain        = var.services_domain
+      domain                 = var.domain
+      ingress_services       = var.ingress_services
+      nameserver_dummy_ip    = var.nameserver_dummy_ip
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
@@ -54,6 +66,8 @@ resource "nomad_job" "consul-terminating" {
     {
       dc_names               = var.dc_names
       services_domain        = var.services_domain
+      terminating_services   = var.terminating_services
+      nameserver_dummy_ip    = var.nameserver_dummy_ip
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )

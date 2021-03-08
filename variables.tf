@@ -7,9 +7,56 @@ variable "domain" {
 variable "services_domain" {
   type = string
 }
+
+variable "ingress_services" {
+  type = list(map(string))
+  default = [
+    {
+      name = "jaeger-query"
+      host = "jaeger"
+    },
+    {
+      name = "grafana-internal"
+      host = "grafana"
+    },
+    {
+      name = "kibana"
+      host = "kibana"
+    },
+    {
+      name = "prometheus"
+      host = "prometheus"
+    }
+  ]
+}
+
+variable "terminating_services" {
+  type = list(map(string))
+  default = [
+    {
+      name = "logstash-tcp"
+    },
+    {
+      name = "logstash-http"
+    },
+    {
+      name = "jaeger-query"
+    },
+    {
+      name = "grafana-internal"
+    },
+    {
+      name = "elastic-internal"
+    },
+    {
+      name = "prometheus"
+    }
+  ]
+}
+
 variable "container_registry" {
   type    = string
-  default = "us.gcr.io/hcpoc-terraform-admin"
+  default = "docker.io"
 }
 variable "artifacts_source_prefix" {
   type = string

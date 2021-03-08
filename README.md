@@ -18,7 +18,9 @@
 
 ## Modules
 
-No Modules.
+| Name | Source | Version |
+|------|--------|---------|
+| kibana | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main |  |
 
 ## Resources
 
@@ -48,14 +50,15 @@ No Modules.
 | cloud | Allow to deploy cloud specific jobs | `string` | `""` | no |
 | configure\_grafana | n/a | `bool` | `true` | no |
 | configure\_monitoring | n/a | `bool` | `true` | no |
-| configure\_openfaas | n/a | `bool` | `true` | no |
 | consul\_endpoint | n/a | `string` | `null` | no |
 | consul\_insecure\_https | n/a | `bool` | `false` | no |
-| container\_registry | n/a | `string` | `"us.gcr.io/hcpoc-terraform-admin"` | no |
+| container\_registry | n/a | `string` | `"docker.io"` | no |
+| ingress\_services | n/a | `list(map(string))` | <pre>[<br>  {<br>    "host": "jaeger",<br>    "name": "jaeger-query"<br>  },<br>  {<br>    "host": "grafana",<br>    "name": "grafana-internal"<br>  },<br>  {<br>    "host": "kibana",<br>    "name": "kibana"<br>  },<br>  {<br>    "host": "prometheus",<br>    "name": "prometheus"<br>  }<br>]</pre> | no |
 | jenkins\_volume\_external\_id | n/a | `string` | `""` | no |
 | logstash\_index\_prefix | n/a | `string` | `"logs-"` | no |
 | monitoring\_jobs\_constraint | List of constraints to be applied to jobs running in monitoring node. Escape $ with double $. | `list(map(string))` | <pre>[<br>  {<br>    "attribute": "${meta.nodeType}",<br>    "operator": "=",<br>    "value": "monitoring"<br>  }<br>]</pre> | no |
 | nameserver\_dummy\_ip | n/a | `string` | `"192.168.0.1"` | no |
+| terminating\_services | n/a | `list(map(string))` | <pre>[<br>  {<br>    "name": "logstash-tcp"<br>  },<br>  {<br>    "name": "logstash-http"<br>  },<br>  {<br>    "name": "jaeger-query"<br>  },<br>  {<br>    "name": "grafana-internal"<br>  },<br>  {<br>    "name": "elastic-internal"<br>  },<br>  {<br>    "name": "prometheus"<br>  }<br>]</pre> | no |
 | vault\_endpoint | n/a | `string` | `null` | no |
 | vault\_skip\_tls\_verify | n/a | `bool` | `false` | no |
 | worker\_jobs\_constraint | List of constraints to be applied to jobs running in workers. Escape $ with double $. | `list(map(string))` | <pre>[<br>  {<br>    "attribute": "${meta.nodeType}",<br>    "operator": "=",<br>    "value": "worker"<br>  }<br>]</pre> | no |

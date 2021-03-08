@@ -23,6 +23,7 @@ provider "nomad" {
 }
 
 provider "grafana" {
-  url  = "https://grafana-internal.${var.domain}"
-  auth = "admin:admin"
+  url     = "https://grafana.${var.domain}"
+  ca_cert = var.ca_cert_file
+  auth    = "admin:admin"
 }

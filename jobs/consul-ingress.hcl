@@ -11,38 +11,41 @@ job "consul-ingress" {
   %{ endfor ~}
   group "ingress-group" {
     network {
+      mode = "bridge"
       port "http" {
-        static = 8181
-        to     = 8181
+        static = 8080
       }
-      mode = "host"
+      dns {
+        servers = [
+          "${nameserver_dummy_ip}"]
+      }
     }
-    task "ingress" {
-      driver = "exec"
-      user   = "consul"
-      env {
-        CONSUL_HTTP_SSL = "true"
+    service {
+      name = "ingress-gateway"
+      tags = [ "ingress", "gateway"]
+      port = "http",
+      check {
+        type = "tcp"
+        port = "http"
+        interval = "5s"
+        timeout = "2s"
       }
-      template {
-        destination = "secrets/env"
-        env = true
-        data = "CONSUL_HTTP_TOKEN={{ with secret \"consul/creds/consul-agent-role\" }}{{ .Data.token }}{{ end }}"
-      }
-      config {
-        command = "/usr/local/bin/consul"
-        args = [
-          "connect", "envoy",
-          "-envoy-binary", "/usr/bin/envoy",
-          "-envoy-version", "1.14.2",
-          "-gateway=ingress",
-          "-register",
-          "-service", "ingress-gateway",
-          "-address", "$${NOMAD_IP_http}:8181",
-          "-http-addr", "http://127.0.0.1:8501",
-          "-ca-file", "/etc/consul.d/ca",
-          "-client-cert", "/etc/consul.d/cert",
-          "-client-key", "/etc/consul.d/keyfile"
-        ]
+      connect {
+        gateway {
+          proxy {}
+          ingress {
+            listener {
+              port = 8080
+              protocol = "http"
+              %{ for service in ingress_services ~}
+              service {
+                name = "${service["name"]}"
+                hosts = [ "${service["host"]}.${domain}" ]
+              }
+              %{ endfor ~}
+            }
+          }
+        }
       }
     }
   }
