@@ -120,12 +120,6 @@ variable "configure_monitoring" {
   default = true
 }
 
-variable "configure_openfaas" {
-  type    = bool
-  default = true
-}
-
-
 variable "worker_jobs_constraint" {
   type = list(map(string))
   default = [{

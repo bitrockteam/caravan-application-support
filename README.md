@@ -50,7 +50,6 @@
 | cloud | Allow to deploy cloud specific jobs | `string` | `""` | no |
 | configure\_grafana | n/a | `bool` | `true` | no |
 | configure\_monitoring | n/a | `bool` | `true` | no |
-| configure\_openfaas | n/a | `bool` | `true` | no |
 | consul\_endpoint | n/a | `string` | `null` | no |
 | consul\_insecure\_https | n/a | `bool` | `false` | no |
 | container\_registry | n/a | `string` | `"docker.io"` | no |
