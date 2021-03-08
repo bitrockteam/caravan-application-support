@@ -18,7 +18,9 @@
 
 ## Modules
 
-No Modules.
+| Name | Source | Version |
+|------|--------|---------|
+| kibana | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main |  |
 
 ## Resources
 

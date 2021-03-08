@@ -20,6 +20,16 @@ resource "nomad_job" "monitoring" {
   )
 }
 
+module "kibana" {
+  source                  = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main"
+  dc_names                = var.dc_names
+  nameserver_dummy_ip     = var.nameserver_dummy_ip
+  services_domain         = var.services_domain
+  elastic_service_name    = "elastic-internal"
+  kibana_jobs_constraints = var.monitoring_jobs_constraint
+  nomad_endpoint          = var.nomad_endpoint
+}
+
 resource "nomad_job" "openfaas" {
   count = var.configure_openfaas ? 1 : 0
   jobspec = templatefile(
