@@ -23,7 +23,7 @@ job "csi_nodes" {
         mount_dir = "/csi"
       }
       resources {
-        cpu    = 500
+        cpu    = 250
         memory = 256
       }
     }
