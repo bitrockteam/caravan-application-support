@@ -18,6 +18,7 @@ resource "nomad_job" "monitoring" {
       monitoring_jobs_constraint = var.monitoring_jobs_constraint
     }
   )
+  depends_on = [nomad_job.consul-ingress]
 }
 
 module "kibana" {
@@ -27,6 +28,7 @@ module "kibana" {
   services_domain         = var.services_domain
   elastic_service_name    = "elastic-internal"
   kibana_jobs_constraints = var.monitoring_jobs_constraint
+  depends_on              = [nomad_job.consul-ingress]
 }
 
 resource "nomad_job" "workloads" {
@@ -44,6 +46,7 @@ resource "nomad_job" "workloads" {
       worker_jobs_constraint     = var.worker_jobs_constraint
     }
   )
+  depends_on = [nomad_job.consul-ingress]
 }
 
 resource "nomad_job" "consul-ingress" {
@@ -57,6 +60,7 @@ resource "nomad_job" "consul-ingress" {
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
+  depends_on = [consul_config_entry.proxy_defaults]
 }
 
 resource "nomad_job" "consul-terminating" {
@@ -70,6 +74,7 @@ resource "nomad_job" "consul-terminating" {
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
+  depends_on = [consul_config_entry.proxy_defaults]
 }
 
 resource "nomad_job" "consul-esm" {
@@ -81,4 +86,5 @@ resource "nomad_job" "consul-esm" {
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
+  depends_on = [consul_config_entry.proxy_defaults]
 }

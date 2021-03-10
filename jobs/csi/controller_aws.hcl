@@ -22,7 +22,7 @@ job "csi_controller" {
         mount_dir = "/csi"
       }
       resources {
-        cpu    = 500
+        cpu    = 250
         memory = 256
       }
     }
