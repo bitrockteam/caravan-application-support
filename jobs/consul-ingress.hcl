@@ -15,6 +15,9 @@ job "consul-ingress" {
       port "http" {
         static = 8080
       }
+      port "http_envoy_prom" {
+        to = "9102"
+      }
       dns {
         servers = [
           "${nameserver_dummy_ip}"]
@@ -29,6 +32,9 @@ job "consul-ingress" {
         port = "http"
         interval = "5s"
         timeout = "2s"
+      }
+      meta {
+        envoy_metrics_port = "$${NOMAD_HOST_PORT_http_envoy_prom}"
       }
       connect {
         gateway {
