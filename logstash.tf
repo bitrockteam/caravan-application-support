@@ -1,13 +1,10 @@
-resource "nomad_job" "logstash" {
-  count = var.configure_monitoring ? 1 : 0
-  jobspec = templatefile(
-    "${path.module}/jobs/monitoring/logstash_job.hcl",
-    {
-      dc_names              = var.dc_names
-      services_domain       = var.services_domain
-      logstash_index_prefix = var.logstash_index_prefix
-    }
-  )
+module "logstash" {
+  count                     = var.configure_monitoring ? 1 : 0
+  source                    = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash?ref=main"
+  dc_names                  = var.dc_names
+  services_domain           = var.services_domain
+  elastic_service_name      = "elastic-internal"
+  logstash_jobs_constraints = var.monitoring_jobs_constraint
 }
 
 resource "consul_config_entry" "logstash-tcp" {

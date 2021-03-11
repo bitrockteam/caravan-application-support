@@ -1,27 +1,17 @@
-locals {
-  monitoring_jobs = var.configure_monitoring ? { for f in fileset(path.module, "jobs/monitoring/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f } : {}
-  workload_jobs   = { for f in fileset(path.module, "jobs/*_job.hcl") : basename(trimsuffix(f, "_job.hcl")) => f }
-}
-
-resource "nomad_job" "monitoring" {
-  for_each = local.monitoring_jobs
-  jobspec = templatefile(
-    each.value,
-    {
-      dc_names                   = var.dc_names
-      services_domain            = var.services_domain
-      artifacts_source_prefix    = var.artifacts_source_prefix
-      container_registry         = var.container_registry
-      domain                     = var.domain
-      nameserver_dummy_ip        = var.nameserver_dummy_ip
-      logstash_index_prefix      = var.logstash_index_prefix
-      monitoring_jobs_constraint = var.monitoring_jobs_constraint
-    }
-  )
-  depends_on = [nomad_job.consul-ingress]
+module "jaeger" {
+  count                                    = var.configure_monitoring ? 1 : 0
+  source                                   = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=main"
+  dc_names                                 = var.dc_names
+  services_domain                          = var.services_domain
+  elastic_service_name                     = "elastic-internal"
+  jaeger_agent_service_name                = "jaeger-agent"
+  artifact_source_jaeger_spark_dependecies = "https://bitrock-jars.s3.amazonaws.com/jaeger-spark-dependencies-0.0.1-SNAPSHOT.jar"
+  jaeger_jobs_constraints                  = var.monitoring_jobs_constraint
+  depends_on                               = [nomad_job.consul-ingress]
 }
 
 module "kibana" {
+  count                   = var.configure_monitoring ? 1 : 0
   source                  = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main"
   dc_names                = var.dc_names
   nameserver_dummy_ip     = var.nameserver_dummy_ip
@@ -31,22 +21,12 @@ module "kibana" {
   depends_on              = [nomad_job.consul-ingress]
 }
 
-resource "nomad_job" "workloads" {
-  for_each = local.workload_jobs
-  jobspec = templatefile(
-    each.value,
-    {
-      dc_names                   = var.dc_names
-      services_domain            = var.services_domain
-      artifacts_source_prefix    = var.artifacts_source_prefix
-      container_registry         = var.container_registry
-      domain                     = var.domain
-      nameserver_dummy_ip        = var.nameserver_dummy_ip
-      monitoring_jobs_constraint = var.monitoring_jobs_constraint
-      worker_jobs_constraint     = var.worker_jobs_constraint
-    }
-  )
-  depends_on = [nomad_job.consul-ingress]
+module "filebeat" {
+  count           = var.configure_monitoring ? 1 : 0
+  source          = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=main"
+  dc_names        = var.dc_names
+  domain          = var.domain
+  services_domain = var.services_domain
 }
 
 resource "nomad_job" "consul-ingress" {
