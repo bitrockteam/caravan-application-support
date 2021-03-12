@@ -16,12 +16,11 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 7,
-  "iteration": 1602669915733,
+  "id": 2,
+  "iteration": 1615569162119,
   "links": [],
   "panels": [
     {
-      "content": "<div style=\"display: flex; align-items: center\">\n  <img src=\"https://www.datocms-assets.com/2885/1507928925-consul.svg\" alt=\"Consul Icon\">&nbsp;&nbsp;&nbsp;\n  <span style=\"font-size: 32px\">svc/$service</span>\n</div>",
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -37,12 +36,11 @@
       },
       "id": 20,
       "links": [],
-      "mode": "html",
       "options": {
         "content": "<div style=\"display: flex; align-items: center\">\n  <img src=\"https://www.datocms-assets.com/2885/1507928925-consul.svg\" alt=\"Consul Icon\">&nbsp;&nbsp;&nbsp;\n  <span style=\"font-size: 32px\">svc/$service</span>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -64,7 +62,6 @@
           ],
           "max": 1,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -106,12 +103,13 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(rate(envoy_http_downstream_rq_xx{envoy_response_code_class!=\"5\",local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener_http\"}[1m])) / sum(rate(envoy_http_downstream_rq_xx{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener_http\"}[1m]))",
+          "expr": "sum(rate(envoy_http_downstream_rq_xx{envoy_response_code_class!=\"5\",local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener\"}[1m])) / sum(rate(envoy_http_downstream_rq_xx{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener\"}[1m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -191,7 +189,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(irate(envoy_http_downstream_rq_total{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener_http\"}[30s]))",
+          "expr": "sum(irate(envoy_http_downstream_rq_total{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener\"}[30s]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -278,7 +276,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "Source: $local_cluster",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "histogram_quantile(0.95, sum(irate(envoy_cluster_upstream_rq_time_bucket{local_cluster=\"$service\"}[30s])) by (le))",
@@ -367,7 +365,7 @@
         "lineColor": "#B877D9",
         "show": true
       },
-      "tableColumn": "rx",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum(irate(envoy_http_downstream_cx_rx_bytes_total{local_cluster=\"$service\", envoy_http_conn_manager_prefix=~\"$listener\"}[1m]))*8 + sum(irate(envoy_cluster_upstream_cx_rx_bytes_total{local_cluster=\"$service\",}[1m])) * 8",
@@ -458,7 +456,7 @@
         "lineColor": "#FADE2A",
         "show": true
       },
-      "tableColumn": "tx",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum(irate(envoy_http_downstream_cx_tx_bytes_total{local_cluster=\"$service\", envoy_http_conn_manager_prefix=~\"$listener\"}[1m]))*8 + sum(irate(envoy_cluster_upstream_cx_tx_bytes_total{local_cluster=\"$service\"}[1m]))*8",
@@ -486,7 +484,6 @@
       "valueName": "current"
     },
     {
-      "content": "<div class=\"text-center dashboard-header\">\n  <span>INBOUND TRAFFIC</span>\n</div>",
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -502,12 +499,11 @@
       },
       "id": 17,
       "links": [],
-      "mode": "html",
       "options": {
         "content": "<div class=\"text-center dashboard-header\">\n  <span>INBOUND TRAFFIC</span>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -548,9 +544,12 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -560,7 +559,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(envoy_http_downstream_rq_xx{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener_http\"}[1m])) by (local_cluster, envoy_response_code_class)",
+          "expr": "sum(increase(envoy_http_downstream_rq_xx{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener\"}[1m])) by (local_cluster, envoy_response_code_class)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -645,9 +644,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -657,8 +659,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(envoy_http_downstream_rq_total{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener_http\"}[30s]))",
+          "expr": "sum(irate(envoy_http_downstream_rq_total{local_cluster=\"$service\",envoy_http_conn_manager_prefix=\"public_listener\"}[30s]))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "svc/{{consul_service}}",
           "refId": "A"
@@ -742,9 +745,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -822,7 +828,6 @@
       }
     },
     {
-      "content": "<div class=\"text-center dashboard-header\">\n  <span>INBOUND TRAFFIC BY SOURCE</span>\n</div>",
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -838,12 +843,11 @@
       },
       "id": 32,
       "links": [],
-      "mode": "html",
       "options": {
         "content": "<div class=\"text-center dashboard-header\">\n  <span>INBOUND TRAFFIC BY SOURCE</span>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -884,9 +888,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -983,9 +990,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1081,9 +1091,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1143,7 +1156,6 @@
       }
     },
     {
-      "content": "<div class=\"text-center dashboard-header\">\n  <span>OUTBOUND TRAFFIC BY UPSTREAM</span>\n</div>",
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -1159,12 +1171,11 @@
       },
       "id": 82,
       "links": [],
-      "mode": "html",
       "options": {
         "content": "<div class=\"text-center dashboard-header\">\n  <span>OUTBOUND TRAFFIC BY UPSTREAM</span>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -1206,9 +1217,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1305,9 +1319,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1403,9 +1420,12 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1466,7 +1486,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "consul",
@@ -1478,19 +1498,24 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "spring-echo-example",
-          "value": "spring-echo-example"
+          "text": "kibana",
+          "value": "kibana"
         },
         "datasource": "Prometheus",
         "definition": "label_values(envoy_http_rq_total, local_cluster)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Service",
         "multi": false,
         "name": "service",
         "options": [],
-        "query": "label_values(envoy_http_rq_total, local_cluster)",
-        "refresh": 2,
+        "query": {
+          "query": "label_values(envoy_http_rq_total, local_cluster)",
+          "refId": "Prometheus-service-Variable-Query"
+        },
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -1509,13 +1534,18 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(envoy_cluster_upstream_rq_completed{consul_service=\"$service\"}, local_cluster)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": null,
         "multi": false,
         "name": "inbound",
         "options": [],
-        "query": "label_values(envoy_cluster_upstream_rq_completed{consul_service=\"$service\"}, local_cluster)",
+        "query": {
+          "query": "label_values(envoy_cluster_upstream_rq_completed{consul_service=\"$service\"}, local_cluster)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1535,13 +1565,18 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(envoy_cluster_external_upstream_rq_completed{local_cluster=\"$service\"}, consul_service)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": null,
         "multi": false,
         "name": "outbound",
         "options": [],
-        "query": "label_values(envoy_cluster_external_upstream_rq_completed{local_cluster=\"$service\"}, consul_service)",
+        "query": {
+          "query": "label_values(envoy_cluster_external_upstream_rq_completed{local_cluster=\"$service\"}, consul_service)",
+          "refId": "Prometheus-outbound-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1565,38 +1600,22 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(envoy_http_downstream_cx_tx_bytes_total, envoy_http_conn_manager_prefix)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Listener",
         "multi": true,
         "name": "listener",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "admin",
-            "value": "admin"
-          },
-          {
-            "selected": false,
-            "text": "envoy_prometheus_metrics",
-            "value": "envoy_prometheus_metrics"
-          },
-          {
-            "selected": false,
-            "text": "public_listener_http",
-            "value": "public_listener_http"
-          }
-        ],
-        "query": "label_values(envoy_http_downstream_cx_tx_bytes_total, envoy_http_conn_manager_prefix)",
-        "refresh": 0,
+        "options": [],
+        "query": {
+          "query": "label_values(envoy_http_downstream_cx_tx_bytes_total, envoy_http_conn_manager_prefix)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -1606,7 +1625,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1635,7 +1654,7 @@
     ]
   },
   "timezone": "",
-  "title": "Consul Connect Dashboard",
+  "title": "Consul Connect Services",
   "uid": "kDRlnfcGk",
-  "version": 14
+  "version": 2
 }
