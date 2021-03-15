@@ -5,9 +5,9 @@ locals {
 }
 
 resource "null_resource" "grafana_healthy" {
-  count      = var.configure_grafana ? 1 : 0
+  count = var.configure_grafana ? 1 : 0
   provisioner "local-exec" {
-    command = "while [ $(curl -k --silent --output /dev/null --write-out '%%{http_code}' https://grafana.${var.domain}/api/health) != \"200\" ]; do echo \"Waiting grafana reachable...\"; sleep 10; done; sleep 30"
+    command     = "while [ $(curl -k --silent --output /dev/null --write-out '%%{http_code}' https://grafana.${var.domain}/api/health) != \"200\" ]; do echo \"Waiting grafana reachable...\"; sleep 10; done; sleep 30"
     interpreter = ["/bin/bash", "-c"]
   }
 }

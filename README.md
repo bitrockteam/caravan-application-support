@@ -14,13 +14,17 @@
 | consul | n/a |
 | grafana | n/a |
 | nomad | n/a |
+| null | n/a |
 | vault | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| filebeat | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=main |  |
+| jaeger | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=main |  |
 | kibana | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main |  |
+| logstash | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash?ref=main |  |
 
 ## Resources
 
@@ -32,6 +36,7 @@
 | [nomad_job](https://registry.terraform.io/providers/hashicorp/nomad/latest/docs/resources/job) |
 | [nomad_plugin](https://registry.terraform.io/providers/hashicorp/nomad/latest/docs/data-sources/plugin) |
 | [nomad_volume](https://registry.terraform.io/providers/hashicorp/nomad/latest/docs/resources/volume) |
+| [null_resource](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) |
 | [vault_generic_secret](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/generic_secret) |
 
 ## Inputs
