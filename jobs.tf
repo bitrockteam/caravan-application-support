@@ -1,6 +1,6 @@
 module "jaeger" {
   count                                    = var.configure_monitoring ? 1 : 0
-  source                                   = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=main"
+  source                                   = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=refs/tags/v0.3.7"
   dc_names                                 = var.dc_names
   services_domain                          = var.services_domain
   elastic_service_name                     = "elastic-internal"
@@ -12,7 +12,7 @@ module "jaeger" {
 
 module "kibana" {
   count                   = var.configure_monitoring ? 1 : 0
-  source                  = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main"
+  source                  = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=refs/tags/v0.3.7"
   dc_names                = var.dc_names
   nameserver_dummy_ip     = var.nameserver_dummy_ip
   services_domain         = var.services_domain
@@ -23,7 +23,7 @@ module "kibana" {
 
 module "filebeat" {
   count           = var.configure_monitoring ? 1 : 0
-  source          = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=main"
+  source          = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=refs/tags/v0.3.7"
   dc_names        = var.dc_names
   domain          = var.domain
   services_domain = var.services_domain

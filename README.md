@@ -21,10 +21,10 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| filebeat | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=main |  |
-| jaeger | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=main |  |
-| kibana | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=main |  |
-| logstash | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash?ref=main |  |
+| filebeat | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=refs/tags/v0.3.7 |  |
+| jaeger | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=refs/tags/v0.3.7 |  |
+| kibana | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=refs/tags/v0.3.7 |  |
+| logstash | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash?ref=refs/tags/v0.3.7 |  |
 
 ## Resources
 
