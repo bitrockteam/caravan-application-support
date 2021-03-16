@@ -40,7 +40,7 @@ resource "nomad_job" "consul-ingress" {
       worker_jobs_constraint = var.worker_jobs_constraint
     }
   )
-  depends_on = [consul_config_entry.proxy_defaults]
+  depends_on = [consul_config_entry.proxy_defaults, consul_config_entry.ingress_gateway]
 }
 
 resource "nomad_job" "consul-terminating" {
