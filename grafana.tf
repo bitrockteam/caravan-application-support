@@ -10,6 +10,7 @@ resource "null_resource" "grafana_healthy" {
     command     = "while [ $(curl -k --silent --output /dev/null --write-out '%%{http_code}' https://grafana.${var.domain}/api/health) != \"200\" ]; do echo \"Waiting grafana reachable...\"; sleep 10; done; sleep 30"
     interpreter = ["/bin/bash", "-c"]
   }
+  depends_on = [nomad_job.consul-ingress, nomad_job.consul-terminating]
 }
 
 resource "grafana_dashboard" "dashboard" {
