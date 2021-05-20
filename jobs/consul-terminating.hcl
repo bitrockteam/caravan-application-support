@@ -1,60 +1,56 @@
+variable "datacenters" {
+  type = list(string)
+}
+
+variable "dns_servers" {
+  type = list(string)
+}
+
+variable "terminating_services" {
+  type = list(map(string))
+}
+
 job "consul-terminating" {
-  datacenters = [
-    %{ for dc_name in dc_names ~}"${dc_name}",%{ endfor ~}
-  ]
-  %{ for constraint in worker_jobs_constraint ~}
-  constraint {
-    %{ for key, value in constraint ~}
-    "${key}" = "${value}"
-    %{ endfor ~}
-  }
-  %{ endfor ~}
+  datacenters = var.datacenters
+
   group "terminating-group" {
     network {
       mode = "host"
-      port "envoy_admin" {}
       port "http" {
         static = 21101
+        to     = 8080
+      }
+      dns {
+        servers = var.dns_servers
       }
     }
-    task "terminating" {
-      driver = "exec"
-      user = "consul"
-      env {
-        CONSUL_HTTP_SSL = "true"
+    service {
+      name = "terminating-gateway"
+      tags = [
+        "terminating",
+        "gateway"]
+      port = "http"
+      check {
+        type = "tcp"
+        port = "http"
+        interval = "5s"
+        timeout = "2s"
       }
-      template {
-        destination = "secrets/env"
-        env = true
-        data = "CONSUL_HTTP_TOKEN={{ with secret \"consul/creds/consul-agent-role\" }}{{ .Data.token }}{{ end }}"
-      }
-      config {
-        command = "/usr/local/bin/consul"
-        args = [
-          "connect",
-          "envoy",
-          "-envoy-binary",
-          "/usr/bin/envoy",
-          "-envoy-version",
-          "1.14.2",
-          "-gateway=terminating",
-          "-register",
-          "-service",
-          "terminating-gateway",
-          "-admin-bind",
-          "127.0.0.1:$${NOMAD_PORT_envoy_admin}",
-          "-address",
-          "$${NOMAD_ADDR_http}",
-          "-http-addr",
-          "http://127.0.0.1:8501",
-          "-ca-file",
-          "/etc/consul.d/ca",
-          "-client-cert",
-          "/etc/consul.d/cert",
-          "-client-key",
-          "/etc/consul.d/keyfile"
-        ]
+      connect {
+        gateway {
+          proxy {}
+          terminating {
+
+            dynamic "service" {
+              for_each = var.terminating_services
+              content {
+                name = service.value["name"]
+              }
+            }
+          }
+        }
       }
     }
   }
 }
+
