@@ -11,20 +11,20 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_consul"></a> [consul](#provider\_consul) | n/a |
-| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | n/a |
-| <a name="provider_nomad"></a> [nomad](#provider\_nomad) | n/a |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | n/a |
+| <a name="provider_consul"></a> [consul](#provider\_consul) | 2.12.0 |
+| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 1.10.0 |
+| <a name="provider_nomad"></a> [nomad](#provider\_nomad) | 1.4.15 |
+| <a name="provider_null"></a> [null](#provider\_null) | 3.1.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | 2.20.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_filebeat"></a> [filebeat](#module\_filebeat) | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/filebeat?ref=refs/tags/v0.3.7 |  |
-| <a name="module_jaeger"></a> [jaeger](#module\_jaeger) | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/jaeger?ref=refs/tags/v0.4.5 |  |
-| <a name="module_kibana"></a> [kibana](#module\_kibana) | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/kibana?ref=refs/tags/v0.3.7 |  |
-| <a name="module_logstash"></a> [logstash](#module\_logstash) | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash?ref=refs/tags/v0.3.7 |  |
+| <a name="module_filebeat"></a> [filebeat](#module\_filebeat) | git::https://github.com/bitrockteam/caravan-cart//modules/filebeat | refs/tags/v0.3.7 |
+| <a name="module_jaeger"></a> [jaeger](#module\_jaeger) | git::https://github.com/bitrockteam/caravan-cart//modules/jaeger | refs/tags/v0.4.5 |
+| <a name="module_kibana"></a> [kibana](#module\_kibana) | git::https://github.com/bitrockteam/caravan-cart//modules/kibana | refs/tags/v0.3.7 |
+| <a name="module_logstash"></a> [logstash](#module\_logstash) | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash | refs/tags/v0.3.7 |
 
 ## Resources
 
