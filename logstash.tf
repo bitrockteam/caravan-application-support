@@ -1,6 +1,6 @@
 module "logstash" {
   count                     = var.configure_monitoring ? 1 : 0
-  source                    = "git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash?ref=refs/tags/v0.3.7"
+  source                    = "git::https://github.com/bitrockteam/caravan-cart//modules/logstash?ref=refs/tags/v0.3.7"
   dc_names                  = var.dc_names
   services_domain           = var.services_domain
   elastic_service_name      = "elastic-internal"

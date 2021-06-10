@@ -24,7 +24,7 @@
 | <a name="module_filebeat"></a> [filebeat](#module\_filebeat) | git::https://github.com/bitrockteam/caravan-cart//modules/filebeat | refs/tags/v0.3.7 |
 | <a name="module_jaeger"></a> [jaeger](#module\_jaeger) | git::https://github.com/bitrockteam/caravan-cart//modules/jaeger | refs/tags/v0.4.5 |
 | <a name="module_kibana"></a> [kibana](#module\_kibana) | git::https://github.com/bitrockteam/caravan-cart//modules/kibana | refs/tags/v0.3.7 |
-| <a name="module_logstash"></a> [logstash](#module\_logstash) | git::ssh://git@github.com/bitrockteam/caravan-cart//modules/logstash | refs/tags/v0.3.7 |
+| <a name="module_logstash"></a> [logstash](#module\_logstash) | git::https://github.com/bitrockteam/caravan-cart//modules/logstash | refs/tags/v0.3.7 |
 
 ## Resources
 
