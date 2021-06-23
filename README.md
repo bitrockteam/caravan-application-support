@@ -5,17 +5,21 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 0.14 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 0.15 |
+| <a name="requirement_consul"></a> [consul](#requirement\_consul) | ~> 2.0 |
+| <a name="requirement_grafana"></a> [grafana](#requirement\_grafana) | ~> 1.0 |
+| <a name="requirement_nomad"></a> [nomad](#requirement\_nomad) | ~> 1.0 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | ~> 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_consul"></a> [consul](#provider\_consul) | 2.12.0 |
-| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 1.10.0 |
+| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 1.12.0 |
 | <a name="provider_nomad"></a> [nomad](#provider\_nomad) | 1.4.15 |
 | <a name="provider_null"></a> [null](#provider\_null) | 3.1.0 |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | 2.20.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | 2.21.0 |
 
 ## Modules
 
