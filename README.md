@@ -16,10 +16,10 @@
 | Name | Version |
 |------|---------|
 | <a name="provider_consul"></a> [consul](#provider\_consul) | 2.12.0 |
-| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 1.12.0 |
+| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 1.13.2 |
 | <a name="provider_nomad"></a> [nomad](#provider\_nomad) | 1.4.15 |
 | <a name="provider_null"></a> [null](#provider\_null) | 3.1.0 |
-| <a name="provider_vault"></a> [vault](#provider\_vault) | 2.21.0 |
+| <a name="provider_vault"></a> [vault](#provider\_vault) | 2.22.1 |
 
 ## Modules
 
