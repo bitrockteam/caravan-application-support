@@ -12,7 +12,7 @@ module "jaeger" {
 
 module "kibana" {
   count                   = var.configure_monitoring ? 1 : 0
-  source                  = "git::https://github.com/bitrockteam/caravan-cart//modules/kibana?ref=refs/tags/v0.3.7"
+  source                  = "git::https://github.com/bitrockteam/caravan-cart//modules/kibana?ref=refs/tags/v0.4.12"
   dc_names                = var.dc_names
   nameserver_dummy_ip     = var.nameserver_dummy_ip
   services_domain         = var.services_domain
